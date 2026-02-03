@@ -104,17 +104,8 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      minify: "terser",
-      terserOptions: {
-        compress: {
-          // Reduce aggressive compression that might cause circular dependency issues
-          passes: 1,
-        },
-        mangle: {
-          // Keep variable names more readable to avoid collision issues
-          keep_fnames: true,
-        },
-      },
+      minify: false, // Disable minification to avoid circular dependency issues in production
+      // Size still manageable due to gzip compression and lazy loading
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {

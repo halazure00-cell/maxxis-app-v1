@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const ONBOARDING_KEY = "onboarding-completed";
 const ONBOARDING_STEPS = ["dashboard", "hotspot", "finance", "safety"] as const;
@@ -22,6 +22,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const completeOnboardingRef = useRef<() => void>();
 
   useEffect(() => {
     const completed = localStorage.getItem(ONBOARDING_KEY);
@@ -31,13 +32,22 @@ export const useOnboarding = (): UseOnboardingReturn => {
     }
   }, []);
 
+  const completeOnboarding = useCallback(() => {
+    localStorage.setItem(ONBOARDING_KEY, "true");
+    setIsOnboardingComplete(true);
+    setShowOnboarding(false);
+  }, []);
+
+  // Store ref to avoid circular dependency in callbacks
+  completeOnboardingRef.current = completeOnboarding;
+
   const nextStep = useCallback(() => {
     if (currentStep < ONBOARDING_STEPS.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      completeOnboarding();
+      completeOnboardingRef.current?.();
     }
-  }, [completeOnboarding, currentStep]);
+  }, [currentStep]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
@@ -46,13 +56,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
   }, [currentStep]);
 
   const skipOnboarding = useCallback(() => {
-    completeOnboarding();
-  }, [completeOnboarding]);
-
-  const completeOnboarding = useCallback(() => {
-    localStorage.setItem(ONBOARDING_KEY, "true");
-    setIsOnboardingComplete(true);
-    setShowOnboarding(false);
+    completeOnboardingRef.current?.();
   }, []);
 
   const resetOnboarding = useCallback(() => {
@@ -75,3 +79,4 @@ export const useOnboarding = (): UseOnboardingReturn => {
     resetOnboarding,
   };
 };
+
