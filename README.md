@@ -39,6 +39,18 @@ npm run preview
 npm run test
 ```
 
+## Deployment ke Vercel
+
+Aplikasi ini siap di-deploy ke Vercel dengan konfigurasi yang sudah tersedia.
+
+**Quick Deploy:**
+1. Push code ke GitHub repository
+2. Import project di [Vercel Dashboard](https://vercel.com)
+3. Tambahkan environment variables (lihat `.env.example`)
+4. Deploy otomatis!
+
+**Panduan Lengkap:** Lihat [DEPLOYMENT.md](DEPLOYMENT.md) untuk instruksi detail dan troubleshooting.
+
 ## Catatan Teknis
 - Frontend: React + Vite + TypeScript + Tailwind + shadcn-ui  
 - Backend data: Supabase (opsional untuk mode online)  

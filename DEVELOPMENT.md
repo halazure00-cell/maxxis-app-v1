@@ -45,3 +45,9 @@ Panduan ini memastikan pengembangan tetap selaras, stabil, dan minim konflik.
 ## 9) Rilis
 - Gunakan tag rilis semantik: `vX.Y.Z`
 - Catat perubahan di CHANGELOG (jika digunakan)
+
+## 10) Deployment
+- **Production**: Deploy ke Vercel otomatis dari branch `main`
+- **Preview**: Setiap PR mendapat preview deployment otomatis
+- Environment variables dikelola di Vercel Dashboard
+- Lihat [DEPLOYMENT.md](DEPLOYMENT.md) untuk panduan lengkap deployment
