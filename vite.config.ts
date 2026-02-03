@@ -104,16 +104,25 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            "vendor-react": ["react", "react-dom", "react-router-dom"],
-            "vendor-ui": ["@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu", "@radix-ui/react-tooltip"],
-            "vendor-supabase": ["@supabase/supabase-js"],
-          },
+      minify: "terser",
+      terserOptions: {
+        compress: {
+          // Reduce aggressive compression that might cause circular dependency issues
+          passes: 1,
+        },
+        mangle: {
+          // Keep variable names more readable to avoid collision issues
+          keep_fnames: true,
         },
       },
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          entryFileNames: "assets/[name]-[hash].js",
+          chunkFileNames: "assets/[name]-[hash].js",
+          assetFileNames: "assets/[name]-[hash][extname]",
+        },
+      },
     },
   };
 });
