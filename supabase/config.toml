@@ -1,0 +1,13 @@
+project_id = "rqqcgfgnxmndiyclcphb"
+
+[functions.get-weather]
+verify_jwt = false
+
+[functions.calculate-summary]
+verify_jwt = false
+
+[functions.sync-daily-stats]
+verify_jwt = false
+
+[functions.send-panic-alert]
+verify_jwt = false

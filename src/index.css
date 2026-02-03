@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Maxim Driver Assistant Design System
+   Primary: Yellow Maxim (#FFD600) + Black
+   Clean, high contrast for outdoor/riding visibility
+*/
+
+@layer base {
+  :root {
+    /* Light Mode - High Contrast for Outdoor Visibility */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+
+    /* Maxim Yellow: #FFD600 = 51 100% 50% in HSL */
+    --primary: 51 100% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 51 100% 45%;
+    --accent-foreground: 0 0% 5%;
+
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 51 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 51 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 51 100% 50%;
+
+    /* Custom Maxim Variables */
+    --maxim-yellow: 51 100% 50%;
+    --maxim-black: 0 0% 5%;
+    --health-green: 142 76% 36%;
+    --health-yellow: 38 92% 50%;
+    --health-red: 0 84% 60%;
+  }
+
+  .dark {
+    /* Dark Mode - Night Driving */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 51 100% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 51 100% 45%;
+    --accent-foreground: 0 0% 5%;
+
+    --success: 142 76% 40%;
+    --success-foreground: 0 0% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 5%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 22%;
+    --input: 0 0% 22%;
+    --ring: 51 100% 50%;
+
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 51 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 22%;
+    --sidebar-ring: 51 100% 50%;
+
+    --maxim-yellow: 51 100% 50%;
+    --maxim-black: 0 0% 5%;
+    --health-green: 142 76% 40%;
+    --health-yellow: 38 92% 50%;
+    --health-red: 0 72% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Large touch targets for mobile/riding */
+  button, a, input, select {
+    min-height: 44px;
+  }
+}
+
+@layer components {
+  /* Panic Button - Always visible */
+  .panic-button {
+    @apply fixed bottom-24 right-4 z-50 w-16 h-16 rounded-full bg-destructive text-destructive-foreground shadow-lg;
+    @apply flex items-center justify-center;
+    @apply animate-pulse hover:animate-none active:scale-95;
+  }
+
+  /* Health Gauge */
+  .health-gauge {
+    @apply relative w-full h-3 rounded-full overflow-hidden bg-muted;
+  }
+
+  /* Bottom Navigation */
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-40 bg-card border-t border-border;
+    @apply flex justify-around items-center h-16 px-2;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Shake animation for invalid input */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+  
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  /* Card variants for dashboard */
+  .stat-card {
+    @apply bg-card rounded-xl p-4 shadow-sm border border-border;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  .stat-label {
+    @apply text-sm text-muted-foreground;
+  }
+}
+
+/* Safe area padding for mobile */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+}
