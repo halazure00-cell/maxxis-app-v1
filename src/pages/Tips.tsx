@@ -21,7 +21,7 @@ const STORAGE_KEY = "tips_checklist_state";
 const Tips = () => {
   const { toast } = useToast();
   const [copiedScript, setCopiedScript] = useState<string | null>(null);
-  
+
   // Load checklist from localStorage
   const [checkedItems, setCheckedItems] = useState<string[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -50,9 +50,7 @@ const Tips = () => {
   }, [checkedItems]);
 
   const toggleCheck = (id: string) => {
-    setCheckedItems((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
+    setCheckedItems((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
   };
 
   const copyScript = async (text: string, id: string) => {
@@ -117,22 +115,15 @@ const Tips = () => {
                 key={item.id}
                 className={cn(
                   "w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left",
-                  isChecked 
-                    ? "bg-success/10 border-2 border-success/30" 
-                    : "bg-muted border-2 border-transparent"
+                  isChecked ? "bg-success/10 border-2 border-success/30" : "bg-muted border-2 border-transparent"
                 )}
                 onClick={() => toggleCheck(item.id)}
               >
                 <span className="text-xl">{item.emoji}</span>
-                <span className={cn(
-                  "flex-1 font-medium",
-                  isChecked && "line-through text-muted-foreground"
-                )}>
+                <span className={cn("flex-1 font-medium", isChecked && "line-through text-muted-foreground")}>
                   {item.label}
                 </span>
-                {isChecked && (
-                  <CheckCircle className="w-5 h-5 text-success" />
-                )}
+                {isChecked && <CheckCircle className="w-5 h-5 text-success" />}
               </button>
             );
           })}
@@ -151,9 +142,7 @@ const Tips = () => {
           <Accordion type="single" collapsible className="w-full">
             {scripts.map((script) => (
               <AccordionItem key={script.id} value={script.id} className="border-b-0">
-                <AccordionTrigger className="text-sm font-medium py-3">
-                  {script.title}
-                </AccordionTrigger>
+                <AccordionTrigger className="text-sm font-medium py-3">{script.title}</AccordionTrigger>
                 <AccordionContent className="text-sm pb-4">
                   <div className="p-3 bg-muted rounded-xl text-muted-foreground italic relative">
                     {script.text}
@@ -190,19 +179,15 @@ const Tips = () => {
             <span className="text-xl">📸</span>
             <div>
               <p className="font-medium text-foreground">Foto Helm & Jaket</p>
-              <p className="text-sm text-muted-foreground">
-                Verifikasi setiap 3 bulan
-              </p>
+              <p className="text-sm text-muted-foreground">Verifikasi setiap 3 bulan</p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3 p-3 bg-success/10 rounded-xl border border-success/30">
             <span className="text-xl">💰</span>
             <div>
               <p className="font-medium text-foreground">Atribut = Komisi 5%</p>
-              <p className="text-sm text-muted-foreground">
-                Hemat 10% dari pendapatan!
-              </p>
+              <p className="text-sm text-muted-foreground">Hemat 10% dari pendapatan!</p>
             </div>
           </div>
         </CardContent>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { 
-  MapPin, 
-  Navigation, 
-  Save, 
+import {
+  MapPin,
+  Navigation,
+  Save,
   Loader2,
   Car,
   UtensilsCrossed,
@@ -11,7 +11,7 @@ import {
   Fuel,
   Clock,
   CheckCircle,
-  X
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -75,7 +75,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
 
   // Current time
   const [currentTime, setCurrentTime] = useState(new Date());
-  
+
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -102,10 +102,10 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        
+
         // Try to get address name via reverse geocoding (simple approach)
         let locationName = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
-        
+
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18`
@@ -215,7 +215,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
       queryClient.invalidateQueries({ queryKey: ["hotspots"] });
       toast({
         title: "✅ Order Tersimpan!",
-        description: `${formatCurrency(netAmount)} bersih dari ${orderTypes.find(t => t.id === orderType)?.label}`,
+        description: `${formatCurrency(netAmount)} bersih dari ${orderTypes.find((t) => t.id === orderType)?.label}`,
       });
       onSuccess?.();
     },
@@ -243,17 +243,17 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
         <CardContent className="p-3 flex items-center justify-center gap-2">
           <Clock className="w-4 h-4 text-primary" />
           <span className="font-mono text-lg font-semibold text-foreground">
-            {currentTime.toLocaleTimeString("id-ID", { 
-              hour: "2-digit", 
+            {currentTime.toLocaleTimeString("id-ID", {
+              hour: "2-digit",
               minute: "2-digit",
-              second: "2-digit"
+              second: "2-digit",
             })}
           </span>
           <span className="text-xs text-muted-foreground ml-2">
-            {currentTime.toLocaleDateString("id-ID", { 
+            {currentTime.toLocaleDateString("id-ID", {
               weekday: "short",
-              day: "numeric", 
-              month: "short" 
+              day: "numeric",
+              month: "short",
             })}
           </span>
         </CardContent>
@@ -284,25 +284,17 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
       {/* Gross Amount */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-foreground">Harga Order</label>
-        <CurrencyInput 
-          value={grossAmount} 
-          onChange={setGrossAmount} 
-          placeholder="0" 
-        />
-        <PresetButtons
-          options={pricePresets}
-          selectedValue={grossAmount}
-          onSelect={setGrossAmount}
-        />
+        <CurrencyInput value={grossAmount} onChange={setGrossAmount} placeholder="0" />
+        <PresetButtons options={pricePresets} selectedValue={grossAmount} onSelect={setGrossAmount} />
       </div>
 
       {/* Auto Commission Display */}
-      <Card className={cn(
-        "border-2",
-        profile?.attribute_status === "active" 
-          ? "border-success/30 bg-success/5" 
-          : "border-warning/30 bg-warning/5"
-      )}>
+      <Card
+        className={cn(
+          "border-2",
+          profile?.attribute_status === "active" ? "border-success/30 bg-success/5" : "border-warning/30 bg-warning/5"
+        )}
+      >
         <CardContent className="p-3 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-foreground">
@@ -312,9 +304,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
               {profile?.attribute_status === "active" ? "Atribut Lengkap" : "Tanpa Atribut"}
             </p>
           </div>
-          <span className="text-lg font-bold text-destructive">
-            -{formatCurrency(commissionAmount)}
-          </span>
+          <span className="text-lg font-bold text-destructive">-{formatCurrency(commissionAmount)}</span>
         </CardContent>
       </Card>
 
@@ -324,16 +314,8 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
           <Fuel className="w-4 h-4 text-muted-foreground" />
           Biaya Bensin (opsional)
         </label>
-        <CurrencyInput 
-          value={fuelCost} 
-          onChange={setFuelCost} 
-          placeholder="0" 
-        />
-        <PresetButtons
-          options={fuelPresets}
-          selectedValue={fuelCost}
-          onSelect={setFuelCost}
-        />
+        <CurrencyInput value={fuelCost} onChange={setFuelCost} placeholder="0" />
+        <PresetButtons options={fuelPresets} selectedValue={fuelCost} onSelect={setFuelCost} />
       </div>
 
       {/* GPS Location Picker */}
@@ -342,7 +324,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
           <MapPin className="w-4 h-4 text-muted-foreground" />
           Titik Jemput (opsional)
         </label>
-        
+
         {pickupLocation ? (
           <Card className="border-success/30 bg-success/5">
             <CardContent className="p-3">
@@ -350,31 +332,24 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
                 <div className="flex items-start gap-2 flex-1 min-w-0">
                   <Navigation className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {pickupLocation.name}
-                    </p>
+                    <p className="text-sm font-medium text-foreground truncate">{pickupLocation.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {pickupLocation.lat.toFixed(5)}, {pickupLocation.lng.toFixed(5)}
                     </p>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-8 w-8 flex-shrink-0"
-                  onClick={clearLocation}
-                >
+                <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0" onClick={clearLocation}>
                   <X className="w-4 h-4" />
                 </Button>
               </div>
-              
+
               {/* Save as Hotspot Toggle */}
               <button
                 onClick={() => setSaveAsHotspot(!saveAsHotspot)}
                 className={cn(
                   "w-full mt-3 p-2 rounded-lg border-2 flex items-center justify-center gap-2 transition-all text-sm",
-                  saveAsHotspot 
-                    ? "border-primary bg-primary/10 text-primary" 
+                  saveAsHotspot
+                    ? "border-primary bg-primary/10 text-primary"
                     : "border-border bg-background text-muted-foreground"
                 )}
               >
@@ -384,12 +359,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
             </CardContent>
           </Card>
         ) : (
-          <Button
-            variant="outline"
-            className="w-full h-12"
-            onClick={handleGetLocation}
-            disabled={isLocating}
-          >
+          <Button variant="outline" className="w-full h-12" onClick={handleGetLocation} disabled={isLocating}>
             {isLocating ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -403,10 +373,8 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
             )}
           </Button>
         )}
-        
-        {locationError && (
-          <p className="text-xs text-destructive text-center">{locationError}</p>
-        )}
+
+        {locationError && <p className="text-xs text-destructive text-center">{locationError}</p>}
       </div>
 
       {/* Net Result Card */}
@@ -429,10 +397,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
           <hr className="border-border" />
           <div className="flex justify-between items-center">
             <span className="font-semibold text-foreground">Pendapatan Bersih</span>
-            <span className={cn(
-              "text-2xl font-bold",
-              netAmount >= 0 ? "text-success" : "text-destructive"
-            )}>
+            <span className={cn("text-2xl font-bold", netAmount >= 0 ? "text-success" : "text-destructive")}>
               {formatCurrency(netAmount)}
             </span>
           </div>
@@ -441,11 +406,7 @@ const OrderInputForm = ({ onSuccess, onCancel }: OrderInputFormProps) => {
 
       {/* Action Buttons */}
       <div className="flex gap-3">
-        <Button
-          variant="outline"
-          className="flex-1 h-12"
-          onClick={onCancel || handleReset}
-        >
+        <Button variant="outline" className="flex-1 h-12" onClick={onCancel || handleReset}>
           {onCancel ? "Batal" : "Reset"}
         </Button>
         <Button

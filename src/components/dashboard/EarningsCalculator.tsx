@@ -1,23 +1,12 @@
 import { useState } from "react";
-import { 
-  Calculator, 
-  TrendingDown, 
-  TrendingUp, 
-  Plus
-} from "lucide-react";
+import { Calculator, TrendingDown, TrendingUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CurrencyInput } from "@/components/ui/currency-input";
 import { PresetButtons } from "@/components/ui/preset-buttons";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import OrderInputForm from "./OrderInputForm";
 
@@ -41,7 +30,7 @@ interface EarningsCalculatorProps {
 const EarningsCalculator = ({ defaultHasAttribute = true }: EarningsCalculatorProps) => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("input");
-  
+
   // Calculator State
   const [grossIncome, setGrossIncome] = useState<number>(0);
   const [hasAttribute, setHasAttribute] = useState(defaultHasAttribute);
@@ -86,127 +75,109 @@ const EarningsCalculator = ({ defaultHasAttribute = true }: EarningsCalculatorPr
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-      <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl flex flex-col">
-        <SheetHeader className="pb-2 flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-warning" />
-              Keuangan Harian
-            </SheetTitle>
-            {activeTab === "hitung" && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={handleReset}
-                className="text-muted-foreground"
-              >
-                Reset
-              </Button>
-            )}
-          </div>
-        </SheetHeader>
-
-        {/* Sub-menu Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-2 h-11 flex-shrink-0">
-            <TabsTrigger value="input" className="text-xs font-medium">
-              <Plus className="w-4 h-4 mr-1.5" />
-              Input Order
-            </TabsTrigger>
-            <TabsTrigger value="hitung" className="text-xs font-medium">
-              <Calculator className="w-4 h-4 mr-1.5" />
-              Kalkulator
-            </TabsTrigger>
-          </TabsList>
-
-          {/* INPUT ORDER TAB */}
-          <TabsContent value="input" className="flex-1 overflow-y-auto mt-4 -mx-6 px-6">
-            <OrderInputForm onSuccess={handleOrderSaved} />
-          </TabsContent>
-
-          {/* KALKULATOR TAB */}
-          <TabsContent value="hitung" className="flex-1 overflow-y-auto mt-4 space-y-4 pb-6 -mx-6 px-6">
-            {/* Gross Income */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">Pendapatan Kotor</label>
-              <CurrencyInput value={grossIncome} onChange={setGrossIncome} placeholder="0" />
-              <PresetButtons
-                options={incomePresets}
-                selectedValue={grossIncome}
-                onSelect={setGrossIncome}
-              />
-            </div>
-
-            {/* Attribute Toggle */}
-            <Card
-              className={cn(
-                "cursor-pointer transition-all",
-                hasAttribute ? "border-success/50 bg-success/5" : "border-warning/50 bg-warning/5"
+        <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl flex flex-col">
+          <SheetHeader className="pb-2 flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="flex items-center gap-2">
+                <Calculator className="w-5 h-5 text-warning" />
+                Keuangan Harian
+              </SheetTitle>
+              {activeTab === "hitung" && (
+                <Button variant="ghost" size="sm" onClick={handleReset} className="text-muted-foreground">
+                  Reset
+                </Button>
               )}
-              onClick={() => setHasAttribute(!hasAttribute)}
-            >
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-foreground">
-                    {hasAttribute ? "Atribut Lengkap" : "Tanpa Atribut"}
-                  </p>
-                  <p className={cn("text-sm", hasAttribute ? "text-success" : "text-warning")}>
-                    Komisi {hasAttribute ? "5%" : "15%"}
-                  </p>
-                </div>
-                <Switch checked={hasAttribute} onCheckedChange={setHasAttribute} />
-              </CardContent>
-            </Card>
-
-            {/* Fuel Cost */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">Biaya BBM</label>
-              <CurrencyInput value={fuelCost} onChange={setFuelCost} placeholder="0" />
-              <PresetButtons
-                options={fuelPresets}
-                selectedValue={fuelCost}
-                onSelect={setFuelCost}
-              />
             </div>
+          </SheetHeader>
 
-            {/* Result Card */}
-            <Card className="bg-gradient-to-br from-warning/10 to-success/10 border-2 border-warning/30">
-              <CardContent className="p-4 space-y-3">
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground flex items-center gap-1.5">
-                      <TrendingDown className="w-3.5 h-3.5" />
-                      Komisi ({(commissionRate * 100).toFixed(0)}%)
-                    </span>
-                    <span className="text-destructive">-{formatCurrency(commission)}</span>
+          {/* Sub-menu Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+            <TabsList className="grid w-full grid-cols-2 h-11 flex-shrink-0">
+              <TabsTrigger value="input" className="text-xs font-medium">
+                <Plus className="w-4 h-4 mr-1.5" />
+                Input Order
+              </TabsTrigger>
+              <TabsTrigger value="hitung" className="text-xs font-medium">
+                <Calculator className="w-4 h-4 mr-1.5" />
+                Kalkulator
+              </TabsTrigger>
+            </TabsList>
+
+            {/* INPUT ORDER TAB */}
+            <TabsContent value="input" className="flex-1 overflow-y-auto mt-4 -mx-6 px-6">
+              <OrderInputForm onSuccess={handleOrderSaved} />
+            </TabsContent>
+
+            {/* KALKULATOR TAB */}
+            <TabsContent value="hitung" className="flex-1 overflow-y-auto mt-4 space-y-4 pb-6 -mx-6 px-6">
+              {/* Gross Income */}
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-foreground">Pendapatan Kotor</label>
+                <CurrencyInput value={grossIncome} onChange={setGrossIncome} placeholder="0" />
+                <PresetButtons options={incomePresets} selectedValue={grossIncome} onSelect={setGrossIncome} />
+              </div>
+
+              {/* Attribute Toggle */}
+              <Card
+                className={cn(
+                  "cursor-pointer transition-all",
+                  hasAttribute ? "border-success/50 bg-success/5" : "border-warning/50 bg-warning/5"
+                )}
+                onClick={() => setHasAttribute(!hasAttribute)}
+              >
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-foreground">{hasAttribute ? "Atribut Lengkap" : "Tanpa Atribut"}</p>
+                    <p className={cn("text-sm", hasAttribute ? "text-success" : "text-warning")}>
+                      Komisi {hasAttribute ? "5%" : "15%"}
+                    </p>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground flex items-center gap-1.5">
-                      <TrendingDown className="w-3.5 h-3.5" />
-                      BBM
-                    </span>
-                    <span className="text-muted-foreground">-{formatCurrency(fuelCost)}</span>
+                  <Switch checked={hasAttribute} onCheckedChange={setHasAttribute} />
+                </CardContent>
+              </Card>
+
+              {/* Fuel Cost */}
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-foreground">Biaya BBM</label>
+                <CurrencyInput value={fuelCost} onChange={setFuelCost} placeholder="0" />
+                <PresetButtons options={fuelPresets} selectedValue={fuelCost} onSelect={setFuelCost} />
+              </div>
+
+              {/* Result Card */}
+              <Card className="bg-gradient-to-br from-warning/10 to-success/10 border-2 border-warning/30">
+                <CardContent className="p-4 space-y-3">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground flex items-center gap-1.5">
+                        <TrendingDown className="w-3.5 h-3.5" />
+                        Komisi ({(commissionRate * 100).toFixed(0)}%)
+                      </span>
+                      <span className="text-destructive">-{formatCurrency(commission)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground flex items-center gap-1.5">
+                        <TrendingDown className="w-3.5 h-3.5" />
+                        BBM
+                      </span>
+                      <span className="text-muted-foreground">-{formatCurrency(fuelCost)}</span>
+                    </div>
                   </div>
-                </div>
-                <hr className="border-border" />
-                <div className="flex justify-between items-center">
-                  <span className="font-semibold text-foreground flex items-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-success" />
-                    Bersih
-                  </span>
-                  <span className={cn(
-                    "text-2xl font-bold",
-                    netIncome >= 0 ? "text-success" : "text-destructive"
-                  )}>
-                    {formatCurrency(netIncome)}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </SheetContent>
-    </Sheet>
+                  <hr className="border-border" />
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-foreground flex items-center gap-1.5">
+                      <TrendingUp className="w-4 h-4 text-success" />
+                      Bersih
+                    </span>
+                    <span className={cn("text-2xl font-bold", netIncome >= 0 ? "text-success" : "text-destructive")}>
+                      {formatCurrency(netIncome)}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </SheetContent>
+      </Sheet>
     </>
   );
 };

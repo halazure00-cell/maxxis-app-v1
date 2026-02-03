@@ -100,7 +100,7 @@ const getTopRecommendation = (
   weather: Weather | null
 ): { category: string; emoji: string; reason: string }[] => {
   const recommendations: { category: string; emoji: string; reason: string }[] = [];
-  
+
   // Weather-based recommendation
   if (weather) {
     const isRaining = ["rain", "showers", "drizzle", "thunderstorm"].includes(weather.condition);
@@ -112,7 +112,7 @@ const getTopRecommendation = (
       });
     }
   }
-  
+
   // Time & day based recommendations
   if (isWeekend) {
     if (timeOfDay === "pagi" || timeOfDay === "siang") {
@@ -164,14 +164,14 @@ const getTopRecommendation = (
       });
     }
   }
-  
+
   return recommendations.slice(0, 3);
 };
 
 // Get nearby area suggestion
 const getNearbyAreaSuggestion = (isWeekend: boolean, timeOfDay: string): string => {
   const hotspots = BANDUNG_HOTSPOTS;
-  
+
   // Filter by relevant category for current conditions
   let relevantCategory = "mall";
   if (!isWeekend && (timeOfDay === "pagi" || timeOfDay === "sore")) {
@@ -179,10 +179,10 @@ const getNearbyAreaSuggestion = (isWeekend: boolean, timeOfDay: string): string 
   } else if (timeOfDay === "siang") {
     relevantCategory = "foodcourt";
   }
-  
-  const relevantSpots = hotspots.filter(h => h.category === relevantCategory);
+
+  const relevantSpots = hotspots.filter((h) => h.category === relevantCategory);
   const randomSpot = relevantSpots[Math.floor(Math.random() * relevantSpots.length)];
-  
+
   return randomSpot?.name || "Paris Van Java";
 };
 
@@ -200,7 +200,7 @@ export const DailyRecommendationDialog = () => {
   useEffect(() => {
     // Check if already shown this session
     const shownThisSession = sessionStorage.getItem(SESSION_KEY);
-    
+
     if (shownThisSession === "true") {
       setLoading(false);
       return;
@@ -212,7 +212,7 @@ export const DailyRecommendationDialog = () => {
         const { data, error } = await supabase.functions.invoke("get-weather", {
           body: {},
         });
-        
+
         if (!error && data) {
           setWeather(data);
         }
@@ -244,12 +244,8 @@ export const DailyRecommendationDialog = () => {
               <Sparkles className="h-6 w-6 text-primary" />
             </div>
           </div>
-          <AlertDialogTitle className="text-xl">
-            {greeting}
-          </AlertDialogTitle>
-          <AlertDialogDescription className="text-base text-foreground/80">
-            {motivation}
-          </AlertDialogDescription>
+          <AlertDialogTitle className="text-xl">{greeting}</AlertDialogTitle>
+          <AlertDialogDescription className="text-base text-foreground/80">{motivation}</AlertDialogDescription>
         </AlertDialogHeader>
 
         {/* Context badges */}
@@ -271,21 +267,14 @@ export const DailyRecommendationDialog = () => {
 
         {/* Recommendations */}
         <div className="space-y-2 my-4">
-          <p className="text-xs font-medium text-muted-foreground text-center">
-            REKOMENDASI HARI INI
-          </p>
+          <p className="text-xs font-medium text-muted-foreground text-center">REKOMENDASI HARI INI</p>
           <div className="space-y-2">
             {recommendations.map((rec, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 p-2.5 rounded-lg bg-muted/50"
-              >
+              <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-muted/50">
                 <span className="text-lg">{rec.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{rec.category}</p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {rec.reason}
-                  </p>
+                  <p className="text-xs text-muted-foreground truncate">{rec.reason}</p>
                 </div>
               </div>
             ))}
@@ -301,10 +290,7 @@ export const DailyRecommendationDialog = () => {
         </div>
 
         <AlertDialogFooter className="mt-4">
-          <AlertDialogAction 
-            onClick={handleClose}
-            className="w-full"
-          >
+          <AlertDialogAction onClick={handleClose} className="w-full">
             Mulai Narik! 🚀
           </AlertDialogAction>
         </AlertDialogFooter>

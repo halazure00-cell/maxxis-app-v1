@@ -9,15 +9,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import ProfileEditor from "@/components/profile/ProfileEditor";
 import PhoneEditor from "@/components/profile/PhoneEditor";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
-import { 
-  LogOut, 
-  Mail, 
-  Calendar,
-  Star,
-  CheckCircle,
-  AlertCircle,
-  DoorOpen
-} from "lucide-react";
+import { LogOut, Mail, Calendar, Star, CheckCircle, AlertCircle, DoorOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -87,9 +79,7 @@ const Profile = () => {
               fullName={profile?.full_name || "Driver"}
             />
           </div>
-          <h2 className="text-2xl font-bold mb-1">
-            {profile?.full_name || "Driver Maxim"}
-          </h2>
+          <h2 className="text-2xl font-bold mb-1">{profile?.full_name || "Driver Maxim"}</h2>
           <p className="text-sm opacity-80">{user?.email}</p>
         </CardContent>
       </Card>
@@ -97,11 +87,8 @@ const Profile = () => {
       {/* Info Grid - 2x2 with Phone Editor integrated */}
       <div className="grid grid-cols-2 gap-3">
         {/* Phone Editor - takes first slot */}
-        <PhoneEditor 
-          userId={user?.id || ""} 
-          currentPhone={profile?.phone} 
-        />
-        
+        <PhoneEditor userId={user?.id || ""} currentPhone={profile?.phone} />
+
         {/* Other info items */}
         {infoItems.map((item, idx) => (
           <Card key={idx}>
@@ -115,12 +102,12 @@ const Profile = () => {
       </div>
 
       {/* Attribute Status */}
-      <Card className={cn(
-        "border-2",
-        profile?.attribute_status === "active" 
-          ? "border-success/50 bg-success/5" 
-          : "border-warning/50 bg-warning/5"
-      )}>
+      <Card
+        className={cn(
+          "border-2",
+          profile?.attribute_status === "active" ? "border-success/50 bg-success/5" : "border-warning/50 bg-warning/5"
+        )}
+      >
         <CardContent className="p-4 flex items-center gap-4">
           {profile?.attribute_status === "active" ? (
             <CheckCircle className="w-10 h-10 text-success flex-shrink-0" />
@@ -129,9 +116,7 @@ const Profile = () => {
           )}
           <div>
             <p className="font-semibold text-foreground">
-              {profile?.attribute_status === "active" 
-                ? "Atribut Aktif" 
-                : "Perlu Diperbarui"}
+              {profile?.attribute_status === "active" ? "Atribut Aktif" : "Perlu Diperbarui"}
             </p>
             <p className="text-sm text-muted-foreground">
               {profile?.attribute_status === "active"
@@ -143,8 +128,8 @@ const Profile = () => {
       </Card>
 
       {/* Sign Out */}
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         className="w-full h-12 text-destructive hover:text-destructive hover:bg-destructive/10"
         onClick={handleSignOutClick}
       >

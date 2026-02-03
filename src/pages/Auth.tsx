@@ -17,15 +17,17 @@ const loginSchema = z.object({
   password: z.string().min(6, "Password minimal 6 karakter"),
 });
 
-const signupSchema = z.object({
-  fullName: z.string().min(2, "Nama minimal 2 karakter").max(100, "Nama terlalu panjang"),
-  email: z.string().email("Email tidak valid"),
-  password: z.string().min(6, "Password minimal 6 karakter"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Password tidak cocok",
-  path: ["confirmPassword"],
-});
+const signupSchema = z
+  .object({
+    fullName: z.string().min(2, "Nama minimal 2 karakter").max(100, "Nama terlalu panjang"),
+    email: z.string().email("Email tidak valid"),
+    password: z.string().min(6, "Password minimal 6 karakter"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password tidak cocok",
+    path: ["confirmPassword"],
+  });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -119,9 +121,7 @@ const Auth = () => {
             <Car className="w-8 h-8 text-primary-foreground" />
           </div>
           <CardTitle className="text-2xl font-bold">Maxim Driver Assistant</CardTitle>
-          <CardDescription>
-            Asisten cerdas untuk driver Maxim
-          </CardDescription>
+          <CardDescription>Asisten cerdas untuk driver Maxim</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -141,12 +141,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="driver@email.com"
-                            autoComplete="email"
-                            {...field}
-                          />
+                          <Input type="email" placeholder="driver@email.com" autoComplete="email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -160,12 +155,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            autoComplete="current-password"
-                            {...field}
-                          />
+                          <Input type="password" placeholder="••••••••" autoComplete="current-password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -190,11 +180,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Nama Lengkap</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Nama Anda"
-                            autoComplete="name"
-                            {...field}
-                          />
+                          <Input placeholder="Nama Anda" autoComplete="name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -208,12 +194,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="driver@email.com"
-                            autoComplete="email"
-                            {...field}
-                          />
+                          <Input type="email" placeholder="driver@email.com" autoComplete="email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -227,12 +208,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            autoComplete="new-password"
-                            {...field}
-                          />
+                          <Input type="password" placeholder="••••••••" autoComplete="new-password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -246,12 +222,7 @@ const Auth = () => {
                       <FormItem>
                         <FormLabel>Konfirmasi Password</FormLabel>
                         <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            autoComplete="new-password"
-                            {...field}
-                          />
+                          <Input type="password" placeholder="••••••••" autoComplete="new-password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

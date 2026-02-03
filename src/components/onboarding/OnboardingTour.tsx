@@ -1,14 +1,7 @@
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  LayoutDashboard, 
-  MapPin, 
-  Wallet, 
-  Shield,
-  ChevronRight,
-  X
-} from "lucide-react";
+import { LayoutDashboard, MapPin, Wallet, Shield, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -47,13 +40,7 @@ const steps = [
 ];
 
 const OnboardingTour = () => {
-  const { 
-    showOnboarding, 
-    currentStep, 
-    totalSteps, 
-    nextStep, 
-    skipOnboarding 
-  } = useOnboarding();
+  const { showOnboarding, currentStep, totalSteps, nextStep, skipOnboarding } = useOnboarding();
 
   if (!showOnboarding) return null;
 
@@ -78,12 +65,7 @@ const OnboardingTour = () => {
                 />
               ))}
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={skipOnboarding}
-              className="text-muted-foreground h-8 px-2"
-            >
+            <Button variant="ghost" size="sm" onClick={skipOnboarding} className="text-muted-foreground h-8 px-2">
               <X className="w-4 h-4 mr-1" />
               Lewati
             </Button>
@@ -91,20 +73,13 @@ const OnboardingTour = () => {
 
           {/* Step Content */}
           <div className="text-center space-y-4">
-            <div className={cn(
-              "mx-auto w-16 h-16 rounded-2xl flex items-center justify-center",
-              step.bgColor
-            )}>
+            <div className={cn("mx-auto w-16 h-16 rounded-2xl flex items-center justify-center", step.bgColor)}>
               <StepIcon className={cn("w-8 h-8", step.color)} />
             </div>
-            
+
             <div className="space-y-2">
-              <h3 className="text-xl font-bold text-foreground">
-                {step.title}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {step.description}
-              </p>
+              <h3 className="text-xl font-bold text-foreground">{step.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
             </div>
           </div>
 
@@ -114,10 +89,7 @@ const OnboardingTour = () => {
           </p>
 
           {/* Actions */}
-          <Button 
-            onClick={nextStep} 
-            className="w-full h-12 text-base font-semibold"
-          >
+          <Button onClick={nextStep} className="w-full h-12 text-base font-semibold">
             {isLastStep ? (
               "Mulai Sekarang"
             ) : (

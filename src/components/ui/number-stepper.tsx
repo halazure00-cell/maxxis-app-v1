@@ -55,9 +55,7 @@ const NumberStepper = ({
 
   return (
     <div className={cn("flex flex-col items-center gap-2", className)}>
-      {label && (
-        <span className="text-sm font-medium text-muted-foreground">{label}</span>
-      )}
+      {label && <span className="text-sm font-medium text-muted-foreground">{label}</span>}
       <div className="flex items-center gap-4">
         <Button
           type="button"
@@ -74,15 +72,17 @@ const NumberStepper = ({
         >
           <Minus className={sizes.icon} />
         </Button>
-        
-        <div className={cn(
-          sizes.value,
-          "font-bold text-center tabular-nums px-2",
-          "rounded-lg bg-primary/10 text-primary py-1"
-        )}>
+
+        <div
+          className={cn(
+            sizes.value,
+            "font-bold text-center tabular-nums px-2",
+            "rounded-lg bg-primary/10 text-primary py-1"
+          )}
+        >
           {value}
         </div>
-        
+
         <Button
           type="button"
           variant="outline"

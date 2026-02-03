@@ -11,11 +11,7 @@ interface ProfileEditorProps {
   fullName: string;
 }
 
-const ProfileEditor = ({
-  userId,
-  currentAvatarUrl,
-  fullName,
-}: ProfileEditorProps) => {
+const ProfileEditor = ({ userId, currentAvatarUrl, fullName }: ProfileEditorProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [showCameraButton, setShowCameraButton] = useState(!currentAvatarUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -68,16 +64,12 @@ const ProfileEditor = ({
       const fileExt = file.name.split(".").pop();
       const filePath = `${userId}/avatar.${fileExt}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file, { upsert: true });
+      const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
+      const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
       // Update profile with new URL
       const { error: updateError } = await supabase
@@ -106,17 +98,14 @@ const ProfileEditor = ({
   };
 
   return (
-    <div 
-      className="relative cursor-pointer group"
-      onClick={handleAvatarClick}
-    >
+    <div className="relative cursor-pointer group" onClick={handleAvatarClick}>
       <Avatar className="w-20 h-20 border-4 border-primary-foreground/30 shadow-lg transition-transform group-active:scale-95">
         <AvatarImage src={currentAvatarUrl || undefined} alt={fullName} />
         <AvatarFallback className="bg-primary-foreground/20 text-primary-foreground text-2xl font-bold">
           {fullName.charAt(0).toUpperCase()}
         </AvatarFallback>
       </Avatar>
-      
+
       {/* Camera button - only visible when no photo OR when showCameraButton is true */}
       {(showCameraButton || isUploading) && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full transition-opacity">
@@ -127,14 +116,14 @@ const ProfileEditor = ({
           )}
         </div>
       )}
-      
+
       {/* Hint text for existing avatar */}
       {currentAvatarUrl && !showCameraButton && (
         <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap">
           <span className="text-[10px] text-primary-foreground/60">Tap untuk ubah</span>
         </div>
       )}
-      
+
       <input
         ref={fileInputRef}
         type="file"

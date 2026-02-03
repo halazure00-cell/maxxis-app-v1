@@ -8,11 +8,7 @@ interface EnhancedPanicButtonProps {
   className?: string;
 }
 
-const EnhancedPanicButton = ({
-  onActivate,
-  holdDuration = 3000,
-  className,
-}: EnhancedPanicButtonProps) => {
+const EnhancedPanicButton = ({ onActivate, holdDuration = 3000, className }: EnhancedPanicButtonProps) => {
   const [isHolding, setIsHolding] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isActivated, setIsActivated] = useState(false);
@@ -27,18 +23,18 @@ const EnhancedPanicButton = ({
 
   const startHold = () => {
     if (isActivated) return;
-    
+
     setIsHolding(true);
     setProgress(0);
     vibrate(50); // Initial haptic feedback
 
     const startTime = Date.now();
-    
+
     progressIntervalRef.current = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const newProgress = Math.min((elapsed / holdDuration) * 100, 100);
       setProgress(newProgress);
-      
+
       // Haptic feedback at milestones
       if (newProgress >= 33 && newProgress < 34) vibrate(30);
       if (newProgress >= 66 && newProgress < 67) vibrate(30);
@@ -98,9 +94,7 @@ const EnhancedPanicButton = ({
       className={cn(
         "relative w-full overflow-hidden rounded-2xl transition-all select-none",
         "flex items-center justify-center gap-3 py-5",
-        isActivated 
-          ? "bg-success text-success-foreground" 
-          : "bg-destructive text-destructive-foreground",
+        isActivated ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground",
         isHolding && "scale-[0.98]",
         className
       )}
@@ -114,24 +108,15 @@ const EnhancedPanicButton = ({
           style={{ width: `${progress}%` }}
         />
       )}
-      
+
       {/* Content */}
       <div className="relative z-10 flex items-center gap-3">
-        <AlertTriangle className={cn(
-          "w-6 h-6",
-          isHolding && "animate-pulse"
-        )} />
+        <AlertTriangle className={cn("w-6 h-6", isHolding && "animate-pulse")} />
         <div className="text-left">
           <p className="font-bold text-base">
-            {isActivated 
-              ? "✓ Bantuan Dipanggil" 
-              : isHolding 
-                ? `Tahan ${remainingSeconds} detik...` 
-                : "Tombol Darurat"}
+            {isActivated ? "✓ Bantuan Dipanggil" : isHolding ? `Tahan ${remainingSeconds} detik...` : "Tombol Darurat"}
           </p>
-          {!isActivated && !isHolding && (
-            <p className="text-xs opacity-80">Tahan 3 detik untuk memanggil bantuan</p>
-          )}
+          {!isActivated && !isHolding && <p className="text-xs opacity-80">Tahan 3 detik untuk memanggil bantuan</p>}
         </div>
       </div>
 
@@ -139,15 +124,7 @@ const EnhancedPanicButton = ({
       {isHolding && (
         <div className="absolute right-4 w-10 h-10">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-            <circle
-              cx="18"
-              cy="18"
-              r="15"
-              fill="none"
-              stroke="currentColor"
-              strokeOpacity="0.3"
-              strokeWidth="3"
-            />
+            <circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
             <circle
               cx="18"
               cy="18"

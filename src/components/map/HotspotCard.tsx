@@ -35,17 +35,13 @@ const HotspotCard = ({ hotspot, isCurrentlyPeakHour, onClick }: HotspotCardProps
           <div className="flex-1 min-w-0">
             {/* Header Row */}
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <h3 className="font-semibold text-foreground truncate">
-                {hotspot.name}
-              </h3>
-              
+              <h3 className="font-semibold text-foreground truncate">{hotspot.name}</h3>
+
               {/* Peak Hour Badge */}
               {isCurrentlyPeakHour && (
-                <Badge className="bg-success text-success-foreground text-xs px-2">
-                  🔥 RAMAI
-                </Badge>
+                <Badge className="bg-success text-success-foreground text-xs px-2">🔥 RAMAI</Badge>
               )}
-              
+
               {/* Source Badge */}
               {hotspot.source === "preset" || hotspot.is_preset ? (
                 <Badge variant="outline" className="text-xs px-1.5 gap-1 border-primary/30">
@@ -61,9 +57,7 @@ const HotspotCard = ({ hotspot, isCurrentlyPeakHour, onClick }: HotspotCardProps
             </div>
 
             {/* Description */}
-            <p className="text-sm text-muted-foreground mb-2">
-              {hotspot.description || hotspot.category}
-            </p>
+            <p className="text-sm text-muted-foreground mb-2">{hotspot.description || hotspot.category}</p>
 
             {/* Tips (if available) */}
             {hotspot.tips && (

@@ -23,16 +23,16 @@ export const useProfile = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: profile, isLoading, error } = useQuery({
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["profile", user?.id],
     queryFn: async (): Promise<Profile | null> => {
       if (!user?.id) return null;
 
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
+      const { data, error } = await supabase.from("profiles").select("*").eq("user_id", user.id).single();
 
       if (error) {
         if (error.code === "PGRST116") {
@@ -51,12 +51,7 @@ export const useProfile = () => {
     mutationFn: async (updates: Partial<Profile>) => {
       if (!user?.id) throw new Error("Not authenticated");
 
-      const { data, error } = await supabase
-        .from("profiles")
-        .update(updates)
-        .eq("user_id", user.id)
-        .select()
-        .single();
+      const { data, error } = await supabase.from("profiles").update(updates).eq("user_id", user.id).select().single();
 
       if (error) throw error;
       return data;

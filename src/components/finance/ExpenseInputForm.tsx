@@ -6,14 +6,7 @@ import { CurrencyInput } from "@/components/ui/currency-input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  Save, 
-  Fuel, 
-  Wallet, 
-  UtensilsCrossed,
-  MoreHorizontal,
-  X
-} from "lucide-react";
+import { Save, Fuel, Wallet, UtensilsCrossed, MoreHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ExpenseInputFormProps {
@@ -31,7 +24,7 @@ const EXPENSE_TYPES = [
 const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  
+
   const [expenseType, setExpenseType] = useState("bensin");
   const [amount, setAmount] = useState(0);
   const [notes, setNotes] = useState("");
@@ -49,7 +42,10 @@ const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["expenses", userId] });
       queryClient.invalidateQueries({ queryKey: ["todayStats", userId] });
-      toast({ title: "✅ Pengeluaran Tercatat!", description: `${EXPENSE_TYPES.find(e => e.id === expenseType)?.label}: Rp ${amount.toLocaleString("id-ID")}` });
+      toast({
+        title: "✅ Pengeluaran Tercatat!",
+        description: `${EXPENSE_TYPES.find((e) => e.id === expenseType)?.label}: Rp ${amount.toLocaleString("id-ID")}`,
+      });
       onClose();
     },
     onError: () => {
@@ -59,10 +55,10 @@ const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
 
   const handleSave = () => {
     if (amount <= 0) {
-      toast({ 
-        title: "Nominal kosong", 
+      toast({
+        title: "Nominal kosong",
         description: "Masukkan jumlah pengeluaran",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
@@ -114,11 +110,7 @@ const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
           <CardTitle className="text-sm">Jumlah Pengeluaran</CardTitle>
         </CardHeader>
         <CardContent>
-          <CurrencyInput 
-            value={amount} 
-            onChange={setAmount} 
-            placeholder="0" 
-          />
+          <CurrencyInput value={amount} onChange={setAmount} placeholder="0" />
         </CardContent>
       </Card>
 
@@ -128,11 +120,7 @@ const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
           <CardTitle className="text-sm">Catatan (Opsional)</CardTitle>
         </CardHeader>
         <CardContent>
-          <Input
-            placeholder="Contoh: SPBU Dago, dll"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
+          <Input placeholder="Contoh: SPBU Dago, dll" value={notes} onChange={(e) => setNotes(e.target.value)} />
         </CardContent>
       </Card>
 
@@ -143,7 +131,9 @@ const ExpenseInputForm = ({ userId, onClose }: ExpenseInputFormProps) => {
         variant="outline"
         className="w-full h-14 text-base font-semibold border-warning text-warning hover:bg-warning/10"
       >
-        {addExpense.isPending ? "Menyimpan..." : (
+        {addExpense.isPending ? (
+          "Menyimpan..."
+        ) : (
           <>
             <Save className="w-5 h-5 mr-2" />
             Simpan Pengeluaran

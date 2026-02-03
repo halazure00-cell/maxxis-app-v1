@@ -34,17 +34,17 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
   const formatPhoneNumber = (value: string) => {
     // Remove non-digits
     let digits = value.replace(/\D/g, "");
-    
+
     // If starts with 0, replace with 62
     if (digits.startsWith("0")) {
       digits = "62" + digits.slice(1);
     }
-    
+
     // If doesn't start with 62, add it
     if (!digits.startsWith("62") && digits.length > 0) {
       digits = "62" + digits;
     }
-    
+
     return digits ? `+${digits}` : "";
   };
 
@@ -65,10 +65,7 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
 
     setIsSaving(true);
     try {
-      const { error: saveError } = await supabase
-        .from("profiles")
-        .update({ phone })
-        .eq("user_id", userId);
+      const { error: saveError } = await supabase.from("profiles").update({ phone }).eq("user_id", userId);
 
       if (saveError) throw saveError;
 
@@ -122,13 +119,7 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
             )}
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 h-9"
-              onClick={handleCancel}
-              disabled={isSaving}
-            >
+            <Button variant="outline" size="sm" className="flex-1 h-9" onClick={handleCancel} disabled={isSaving}>
               <X className="w-3 h-3 mr-1" />
               Batal
             </Button>
@@ -138,11 +129,7 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
               onClick={handleSave}
               disabled={isSaving || !phone || !isValidPhone}
             >
-              {isSaving ? (
-                <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-              ) : (
-                <Check className="w-3 h-3 mr-1" />
-              )}
+              {isSaving ? <Loader2 className="w-3 h-3 mr-1 animate-spin" /> : <Check className="w-3 h-3 mr-1" />}
               Simpan
             </Button>
           </div>
@@ -152,7 +139,7 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
   }
 
   return (
-    <Card 
+    <Card
       className="cursor-pointer hover:border-primary/50 transition-colors active:scale-[0.98]"
       onClick={() => setIsEditing(true)}
     >
@@ -161,9 +148,7 @@ const PhoneEditor = ({ userId, currentPhone }: PhoneEditorProps) => {
           <div className="flex-1 min-w-0">
             <Phone className="w-5 h-5 text-muted-foreground mb-2" />
             <p className="text-xs text-muted-foreground">Telepon</p>
-            <p className="font-semibold text-foreground truncate">
-              {currentPhone || "Belum diisi"}
-            </p>
+            <p className="font-semibold text-foreground truncate">{currentPhone || "Belum diisi"}</p>
           </div>
           <Pencil className="w-4 h-4 text-muted-foreground/50 flex-shrink-0 mt-1" />
         </div>

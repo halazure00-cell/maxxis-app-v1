@@ -10,13 +10,7 @@ interface CurrencyInputProps {
   showClear?: boolean;
 }
 
-const CurrencyInput = ({
-  value,
-  onChange,
-  placeholder = "0",
-  className,
-  showClear = true,
-}: CurrencyInputProps) => {
+const CurrencyInput = ({ value, onChange, placeholder = "0", className, showClear = true }: CurrencyInputProps) => {
   const [displayValue, setDisplayValue] = useState("");
   const [shake, setShake] = useState(false);
 
@@ -40,14 +34,14 @@ const CurrencyInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value;
     const numValue = parseNumber(rawValue);
-    
+
     // Shake if trying to input non-numeric
     if (rawValue && !/^[\d.,\s]*$/.test(rawValue)) {
       setShake(true);
       setTimeout(() => setShake(false), 500);
       return;
     }
-    
+
     onChange(numValue);
     setDisplayValue(numValue > 0 ? formatNumber(numValue) : "");
   };
@@ -59,9 +53,7 @@ const CurrencyInput = ({
 
   return (
     <div className={cn("relative", className)}>
-      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
-        Rp
-      </span>
+      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">Rp</span>
       <input
         type="text"
         inputMode="numeric"

@@ -9,13 +9,7 @@ interface PresetButtonsProps {
   allowDeselect?: boolean;
 }
 
-const PresetButtons = ({
-  options,
-  selectedValue,
-  onSelect,
-  className,
-  allowDeselect = true,
-}: PresetButtonsProps) => {
+const PresetButtons = ({ options, selectedValue, onSelect, className, allowDeselect = true }: PresetButtonsProps) => {
   const handleClick = (value: number) => {
     // If same value clicked and allowDeselect, clear it
     if (allowDeselect && selectedValue === value) {
@@ -42,9 +36,7 @@ const PresetButtons = ({
             )}
           >
             {option.label}
-            {isSelected && allowDeselect && (
-              <span className="ml-1 text-xs opacity-70">✕</span>
-            )}
+            {isSelected && allowDeselect && <span className="ml-1 text-xs opacity-70">✕</span>}
           </Button>
         );
       })}

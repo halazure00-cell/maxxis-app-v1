@@ -6,15 +6,7 @@ import { CurrencyInput } from "@/components/ui/currency-input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  MapPin, 
-  Save, 
-  Bike, 
-  Car, 
-  Package, 
-  UtensilsCrossed,
-  X
-} from "lucide-react";
+import { MapPin, Save, Bike, Car, Package, UtensilsCrossed, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OrderInputFormProps {
@@ -30,12 +22,12 @@ const ORDER_TYPES = [
   { id: "send", label: "Send", icon: Package },
 ];
 
-const FUEL_RATE = 0.10; // 10% fuel deduction
+const FUEL_RATE = 0.1; // 10% fuel deduction
 
 const OrderInputForm = ({ userId, commissionRate, onClose }: OrderInputFormProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  
+
   const [pickupLocation, setPickupLocation] = useState("");
   const [grossAmount, setGrossAmount] = useState(0);
   const [orderType, setOrderType] = useState("ride");
@@ -62,7 +54,10 @@ const OrderInputForm = ({ userId, commissionRate, onClose }: OrderInputFormProps
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders", userId] });
       queryClient.invalidateQueries({ queryKey: ["todayStats", userId] });
-      toast({ title: "✅ Order Tersimpan!", description: `Pendapatan bersih: Rp ${netAmount.toLocaleString("id-ID")}` });
+      toast({
+        title: "✅ Order Tersimpan!",
+        description: `Pendapatan bersih: Rp ${netAmount.toLocaleString("id-ID")}`,
+      });
       onClose();
     },
     onError: () => {
@@ -72,10 +67,10 @@ const OrderInputForm = ({ userId, commissionRate, onClose }: OrderInputFormProps
 
   const handleSave = () => {
     if (grossAmount <= 0) {
-      toast({ 
-        title: "Harga kosong", 
+      toast({
+        title: "Harga kosong",
         description: "Masukkan harga order",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
@@ -148,11 +143,7 @@ const OrderInputForm = ({ userId, commissionRate, onClose }: OrderInputFormProps
           <CardTitle className="text-sm">Harga Order (Kotor)</CardTitle>
         </CardHeader>
         <CardContent>
-          <CurrencyInput 
-            value={grossAmount} 
-            onChange={setGrossAmount} 
-            placeholder="0" 
-          />
+          <CurrencyInput value={grossAmount} onChange={setGrossAmount} placeholder="0" />
         </CardContent>
       </Card>
 
@@ -187,7 +178,9 @@ const OrderInputForm = ({ userId, commissionRate, onClose }: OrderInputFormProps
         disabled={addOrder.isPending || grossAmount <= 0}
         className="w-full h-14 text-base font-semibold"
       >
-        {addOrder.isPending ? "Menyimpan..." : (
+        {addOrder.isPending ? (
+          "Menyimpan..."
+        ) : (
           <>
             <Save className="w-5 h-5 mr-2" />
             Simpan Order

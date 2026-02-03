@@ -21,24 +21,15 @@ const HealthGauge = ({ value, label, className }: HealthGaugeProps) => {
         <span className="text-2xl">{colors.emoji}</span>
         <span className="text-sm font-medium text-muted-foreground">{label}</span>
       </div>
-      
-      <div className={cn("text-5xl font-bold mb-4", colors.text)}>
-        {value}%
-      </div>
-      
+
+      <div className={cn("text-5xl font-bold mb-4", colors.text)}>{value}%</div>
+
       <div className="h-3 bg-muted rounded-full overflow-hidden">
-        <div
-          className={cn("h-full transition-all duration-700 ease-out", colors.bg)}
-          style={{ width: `${value}%` }}
-        />
+        <div className={cn("h-full transition-all duration-700 ease-out", colors.bg)} style={{ width: `${value}%` }} />
       </div>
-      
+
       <p className="text-xs text-muted-foreground mt-3">
-        {value >= 70 
-          ? "Akun dalam kondisi prima" 
-          : value >= 40 
-          ? "Perlu ditingkatkan" 
-          : "Butuh perhatian segera"}
+        {value >= 70 ? "Akun dalam kondisi prima" : value >= 40 ? "Perlu ditingkatkan" : "Butuh perhatian segera"}
       </p>
     </div>
   );

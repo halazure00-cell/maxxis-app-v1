@@ -70,7 +70,7 @@ export const saveHotspots = async (hotspots: HotspotRecord[]): Promise<void> => 
   const store = transaction.objectStore(HOTSPOT_STORE);
 
   const now = Date.now();
-  
+
   return new Promise((resolve, reject) => {
     hotspots.forEach((hotspot) => {
       store.put({ ...hotspot, synced_at: now });

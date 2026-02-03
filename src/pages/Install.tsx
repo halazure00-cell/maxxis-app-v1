@@ -35,7 +35,7 @@ export default function Install() {
 
   const handleInstall = async () => {
     if (!canPrompt) return;
-    
+
     setInstalling(true);
     try {
       const result = await promptInstall();
@@ -56,9 +56,7 @@ export default function Install() {
             <Check className="h-8 w-8 text-success" />
           </div>
           <h1 className="text-2xl font-bold">Sudah Terinstall!</h1>
-          <p className="text-muted-foreground">
-            Anda sudah menggunakan Maxim Driver sebagai aplikasi
-          </p>
+          <p className="text-muted-foreground">Anda sudah menggunakan Maxim Driver sebagai aplikasi</p>
           <Button onClick={() => navigate("/")} className="mt-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Kembali ke Dashboard
@@ -85,9 +83,7 @@ export default function Install() {
             <Smartphone className="h-10 w-10" />
           </div>
           <h1 className="text-2xl font-bold">Install Maxim Driver</h1>
-          <p className="text-primary-foreground/80 mt-2">
-            Dapatkan pengalaman terbaik dengan aplikasi
-          </p>
+          <p className="text-primary-foreground/80 mt-2">Dapatkan pengalaman terbaik dengan aplikasi</p>
         </div>
       </div>
 
@@ -102,9 +98,7 @@ export default function Install() {
                   <benefit.icon className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="font-medium text-sm">{benefit.title}</h3>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {benefit.description}
-                </p>
+                <p className="text-xs text-muted-foreground mt-1">{benefit.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -115,9 +109,7 @@ export default function Install() {
           <CardContent className="p-6">
             {isIOS ? (
               <div className="space-y-4">
-                <h3 className="font-semibold text-center">
-                  Cara Install di iPhone/iPad
-                </h3>
+                <h3 className="font-semibold text-center">Cara Install di iPhone/iPad</h3>
                 <ol className="space-y-4">
                   <li className="flex items-start gap-3">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">
@@ -147,9 +139,7 @@ export default function Install() {
                     </span>
                     <div>
                       <p className="font-medium">Ketuk "Add"</p>
-                      <p className="text-sm text-muted-foreground">
-                        Di pojok kanan atas layar
-                      </p>
+                      <p className="text-sm text-muted-foreground">Di pojok kanan atas layar</p>
                     </div>
                   </li>
                 </ol>
@@ -160,12 +150,7 @@ export default function Install() {
                 <p className="text-sm text-muted-foreground">
                   Klik tombol di bawah untuk menambahkan Maxim Driver ke home screen Anda
                 </p>
-                <Button
-                  onClick={handleInstall}
-                  disabled={installing}
-                  className="w-full"
-                  size="lg"
-                >
+                <Button onClick={handleInstall} disabled={installing} className="w-full" size="lg">
                   <Download className="mr-2 h-5 w-5" />
                   {installing ? "Installing..." : "Install Maxim Driver"}
                 </Button>
@@ -177,20 +162,14 @@ export default function Install() {
                     ? "Gunakan Chrome untuk menginstall aplikasi ini"
                     : "Buka di Chrome atau Edge untuk menginstall"}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  Browser saat ini tidak mendukung instalasi PWA
-                </p>
+                <p className="text-xs text-muted-foreground">Browser saat ini tidak mendukung instalasi PWA</p>
               </div>
             )}
           </CardContent>
         </Card>
 
         {/* Skip Button */}
-        <Button
-          variant="ghost"
-          className="w-full"
-          onClick={() => navigate("/")}
-        >
+        <Button variant="ghost" className="w-full" onClick={() => navigate("/")}>
           Lewati untuk sekarang
         </Button>
       </div>

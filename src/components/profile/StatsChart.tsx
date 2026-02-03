@@ -5,16 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BarChart3, TrendingUp, Wallet, Package } from "lucide-react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { cn } from "@/lib/utils";
 
 interface StatsChartProps {
@@ -56,24 +47,27 @@ const StatsChart = ({ userId }: StatsChartProps) => {
 
     if (period === "daily") {
       // Last 7 days
-      return orderLogs.slice(0, 7).reverse().map((log) => ({
-        name: new Date(log.log_date).toLocaleDateString("id-ID", { weekday: "short" }),
-        selesai: log.orders_completed,
-        batal: log.orders_cancelled + log.orders_auto_rejected,
-        earnings: log.gross_earnings / 1000, // in thousands
-      }));
+      return orderLogs
+        .slice(0, 7)
+        .reverse()
+        .map((log) => ({
+          name: new Date(log.log_date).toLocaleDateString("id-ID", { weekday: "short" }),
+          selesai: log.orders_completed,
+          batal: log.orders_cancelled + log.orders_auto_rejected,
+          earnings: log.gross_earnings / 1000, // in thousands
+        }));
     }
 
     if (period === "weekly") {
       // Group by week (last 4 weeks)
       const weeks: Record<string, { selesai: number; batal: number; earnings: number }> = {};
-      
+
       orderLogs.forEach((log) => {
         const date = new Date(log.log_date);
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay());
         const weekKey = weekStart.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
-        
+
         if (!weeks[weekKey]) {
           weeks[weekKey] = { selesai: 0, batal: 0, earnings: 0 };
         }
@@ -82,19 +76,22 @@ const StatsChart = ({ userId }: StatsChartProps) => {
         weeks[weekKey].earnings += log.gross_earnings / 1000;
       });
 
-      return Object.entries(weeks).slice(0, 4).reverse().map(([name, data]) => ({
-        name: `Mg ${name}`,
-        ...data,
-      }));
+      return Object.entries(weeks)
+        .slice(0, 4)
+        .reverse()
+        .map(([name, data]) => ({
+          name: `Mg ${name}`,
+          ...data,
+        }));
     }
 
     // Monthly - last 3 months
     const months: Record<string, { selesai: number; batal: number; earnings: number }> = {};
-    
+
     orderLogs.forEach((log) => {
       const date = new Date(log.log_date);
       const monthKey = date.toLocaleDateString("id-ID", { month: "short" });
-      
+
       if (!months[monthKey]) {
         months[monthKey] = { selesai: 0, batal: 0, earnings: 0 };
       }
@@ -103,15 +100,18 @@ const StatsChart = ({ userId }: StatsChartProps) => {
       months[monthKey].earnings += log.gross_earnings / 1000;
     });
 
-    return Object.entries(months).slice(0, 3).reverse().map(([name, data]) => ({
-      name,
-      ...data,
-    }));
+    return Object.entries(months)
+      .slice(0, 3)
+      .reverse()
+      .map(([name, data]) => ({
+        name,
+        ...data,
+      }));
   }, [orderLogs, period]);
 
   const totals = useMemo(() => {
     if (!orderLogs) return { orders: 0, earnings: 0, avgRating: 0 };
-    
+
     const total = orderLogs.reduce(
       (acc, log) => ({
         orders: acc.orders + log.orders_completed,
@@ -119,7 +119,7 @@ const StatsChart = ({ userId }: StatsChartProps) => {
       }),
       { orders: 0, earnings: 0 }
     );
-    
+
     return total;
   }, [orderLogs]);
 
@@ -149,16 +149,11 @@ const StatsChart = ({ userId }: StatsChartProps) => {
             <BarChart3 className="w-5 h-5 text-primary" />
             Statistik
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(false)}
-            className="text-muted-foreground"
-          >
+          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(false)} className="text-muted-foreground">
             Tutup
           </Button>
         </div>
-        
+
         {/* Period Toggle */}
         <div className="flex gap-1 mt-2">
           {(["daily", "weekly", "monthly"] as Period[]).map((p) => (
@@ -174,7 +169,7 @@ const StatsChart = ({ userId }: StatsChartProps) => {
           ))}
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {isLoading ? (
           <Skeleton className="h-48 w-full" />
@@ -193,9 +188,7 @@ const StatsChart = ({ userId }: StatsChartProps) => {
               </div>
               <div className="bg-primary/10 rounded-xl p-3 text-center">
                 <Wallet className="w-4 h-4 text-primary mx-auto mb-1" />
-                <p className="text-lg font-bold text-foreground">
-                  Rp {formatCurrency(totals.earnings / 1000)}
-                </p>
+                <p className="text-lg font-bold text-foreground">Rp {formatCurrency(totals.earnings / 1000)}</p>
                 <p className="text-[10px] text-muted-foreground">Total Pendapatan</p>
               </div>
             </div>
@@ -205,15 +198,8 @@ const StatsChart = ({ userId }: StatsChartProps) => {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fontSize: 10 }} 
-                    className="fill-muted-foreground"
-                  />
-                  <YAxis 
-                    tick={{ fontSize: 10 }} 
-                    className="fill-muted-foreground"
-                  />
+                  <XAxis dataKey="name" tick={{ fontSize: 10 }} className="fill-muted-foreground" />
+                  <YAxis tick={{ fontSize: 10 }} className="fill-muted-foreground" />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
@@ -227,7 +213,7 @@ const StatsChart = ({ userId }: StatsChartProps) => {
                       return [value, "Batal/PTO"];
                     }}
                   />
-                  <Legend 
+                  <Legend
                     wrapperStyle={{ fontSize: "10px" }}
                     formatter={(value) => {
                       if (value === "selesai") return "Selesai";
@@ -235,16 +221,8 @@ const StatsChart = ({ userId }: StatsChartProps) => {
                       return "Rp (rb)";
                     }}
                   />
-                  <Bar 
-                    dataKey="selesai" 
-                    fill="hsl(var(--success))" 
-                    radius={[4, 4, 0, 0]} 
-                  />
-                  <Bar 
-                    dataKey="batal" 
-                    fill="hsl(var(--destructive))" 
-                    radius={[4, 4, 0, 0]} 
-                  />
+                  <Bar dataKey="selesai" fill="hsl(var(--success))" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="batal" fill="hsl(var(--destructive))" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

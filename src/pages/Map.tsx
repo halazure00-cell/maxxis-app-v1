@@ -19,17 +19,8 @@ const Map = () => {
   const [showMap, setShowMap] = useState(false);
 
   // Use offline-first hook
-  const {
-    hotspots,
-    isLoading,
-    isOnline,
-    lastSync,
-    totalCount,
-    presetCount,
-    communityCount,
-    syncStatus,
-    forceSync,
-  } = useOfflineHotspots();
+  const { hotspots, isLoading, isOnline, lastSync, totalCount, presetCount, communityCount, syncStatus, forceSync } =
+    useOfflineHotspots();
 
   // Filter hotspots
   const filteredHotspots = useMemo(() => {
@@ -65,7 +56,7 @@ const Map = () => {
 
   // Main category filters
   const categories = Object.entries(CATEGORY_CONFIG).slice(0, 8);
-  
+
   // Area filters
   const areas = Object.entries(AREA_CONFIG);
 
@@ -87,18 +78,13 @@ const Map = () => {
       <DailyRecommendationDialog />
 
       {/* Fullscreen Map Modal */}
-      {showMap && (
-        <FullscreenMap
-          onClose={() => setShowMap(false)}
-          hotspots={filteredHotspots}
-        />
-      )}
+      {showMap && <FullscreenMap onClose={() => setShowMap(false)} hotspots={filteredHotspots} />}
 
       <div className="p-4 space-y-4 pb-24">
         {/* Header with Status */}
         <div className="flex items-center justify-between">
           <PageHeader title="Hotspot" />
-          
+
           {/* Sync Status Badge */}
           <div className="flex items-center gap-2">
             {syncStatus === "syncing" ? (
@@ -107,18 +93,11 @@ const Map = () => {
                 Syncing...
               </Badge>
             ) : (
-              <Badge 
+              <Badge
                 variant={isOnline ? "outline" : "secondary"}
-                className={cn(
-                  "gap-1",
-                  !isOnline && "bg-warning/10 text-warning border-warning/30"
-                )}
+                className={cn("gap-1", !isOnline && "bg-warning/10 text-warning border-warning/30")}
               >
-                {isOnline ? (
-                  <Wifi className="w-3 h-3 text-success" />
-                ) : (
-                  <WifiOff className="w-3 h-3" />
-                )}
+                {isOnline ? <Wifi className="w-3 h-3 text-success" /> : <WifiOff className="w-3 h-3" />}
                 {isOnline ? "Online" : "Offline"}
               </Badge>
             )}
@@ -215,9 +194,7 @@ const Map = () => {
           onClick={() => setShowSafeOnly(!showSafeOnly)}
           className={cn(
             "w-full flex items-center justify-between p-4 rounded-xl transition-all",
-            showSafeOnly
-              ? "bg-success/10 border-2 border-success/30"
-              : "bg-muted border-2 border-transparent"
+            showSafeOnly ? "bg-success/10 border-2 border-success/30" : "bg-muted border-2 border-transparent"
           )}
         >
           <div className="flex items-center gap-3">
@@ -248,31 +225,27 @@ const Map = () => {
               <CardContent className="p-8 text-center">
                 <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">Tidak ada lokasi yang cocok</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Coba ubah filter kategori atau wilayah
-                </p>
+                <p className="text-xs text-muted-foreground mt-1">Coba ubah filter kategori atau wilayah</p>
               </CardContent>
             </Card>
           ) : (
-            filteredHotspots.slice(0, 20).map((hotspot) => (
-              <HotspotCard
-                key={hotspot.id}
-                hotspot={hotspot}
-                isCurrentlyPeakHour={isCurrentlyPeakHour(hotspot.peak_hours)}
-              />
-            ))
+            filteredHotspots
+              .slice(0, 20)
+              .map((hotspot) => (
+                <HotspotCard
+                  key={hotspot.id}
+                  hotspot={hotspot}
+                  isCurrentlyPeakHour={isCurrentlyPeakHour(hotspot.peak_hours)}
+                />
+              ))
           )}
 
           {/* Show more indicator */}
           {filteredHotspots.length > 20 && (
             <Card className="bg-muted/50">
               <CardContent className="p-4 text-center">
-                <p className="text-sm text-muted-foreground">
-                  +{filteredHotspots.length - 20} lokasi lainnya
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Buka peta untuk melihat semua
-                </p>
+                <p className="text-sm text-muted-foreground">+{filteredHotspots.length - 20} lokasi lainnya</p>
+                <p className="text-xs text-muted-foreground">Buka peta untuk melihat semua</p>
               </CardContent>
             </Card>
           )}
@@ -281,9 +254,7 @@ const Map = () => {
         {/* Tip */}
         <Card className="bg-primary/10 border-primary/30">
           <CardContent className="p-4">
-            <p className="text-sm text-foreground">
-              💡 Datang 15 menit sebelum jam sibuk untuk posisi terbaik!
-            </p>
+            <p className="text-sm text-foreground">💡 Datang 15 menit sebelum jam sibuk untuk posisi terbaik!</p>
           </CardContent>
         </Card>
 
@@ -293,9 +264,7 @@ const Map = () => {
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <WifiOff className="w-4 h-4 text-warning" />
-                <p className="text-sm text-foreground">
-                  Mode offline - {totalCount} lokasi tersedia dari cache
-                </p>
+                <p className="text-sm text-foreground">Mode offline - {totalCount} lokasi tersedia dari cache</p>
               </div>
             </CardContent>
           </Card>

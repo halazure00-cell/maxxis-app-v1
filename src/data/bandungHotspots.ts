@@ -114,7 +114,7 @@ const kampusHotspots: PresetHotspot[] = [
     name: "Universitas Maranatha",
     description: "Kampus Maranatha Surya Sumantri",
     latitude: -6.8939,
-    longitude: 107.5860,
+    longitude: 107.586,
     category: "campus",
     peak_hours: ["07:00-09:00", "15:00-18:00"],
     is_safe_zone: true,
@@ -253,7 +253,7 @@ const mallHotspots: PresetHotspot[] = [
     name: "Paris Van Java (PVJ)",
     description: "Mall premium outdoor dengan banyak tenant",
     latitude: -6.8869,
-    longitude: 107.5930,
+    longitude: 107.593,
     category: "mall",
     peak_hours: ["11:00-14:00", "17:00-21:00"],
     is_safe_zone: true,
@@ -312,8 +312,8 @@ const mallHotspots: PresetHotspot[] = [
     id: "mall-23paskal",
     name: "23 Paskal Shopping Center",
     description: "Mall modern dengan food court besar",
-    latitude: -6.9090,
-    longitude: 107.5960,
+    latitude: -6.909,
+    longitude: 107.596,
     category: "mall",
     peak_hours: ["11:00-14:00", "18:00-21:00"],
     is_safe_zone: true,
@@ -606,7 +606,7 @@ const kulinerHotspots: PresetHotspot[] = [
     name: "Riau Street Food",
     description: "Kuliner RE Martadinata",
     latitude: -6.9028,
-    longitude: 107.6190,
+    longitude: 107.619,
     category: "foodcourt",
     peak_hours: ["11:00-14:00", "18:00-21:00"],
     is_safe_zone: true,
@@ -1699,12 +1699,12 @@ export const AREA_CONFIG = {
 
 // Helper function to get hotspots by category
 export const getHotspotsByCategory = (category: string): PresetHotspot[] => {
-  return BANDUNG_HOTSPOTS.filter(h => h.category === category);
+  return BANDUNG_HOTSPOTS.filter((h) => h.category === category);
 };
 
 // Helper function to get hotspots by area
 export const getHotspotsByArea = (area: string): PresetHotspot[] => {
-  return BANDUNG_HOTSPOTS.filter(h => h.area === area);
+  return BANDUNG_HOTSPOTS.filter((h) => h.area === area);
 };
 
 // Total count for display

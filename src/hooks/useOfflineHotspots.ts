@@ -110,15 +110,16 @@ export const useOfflineHotspots = (): UseOfflineHotspotsReturn => {
   }, [isOnline]);
 
   // Fetch database hotspots when online
-  const { data: dbHotspots, isLoading, refetch } = useQuery({
+  const {
+    data: dbHotspots,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["hotspots-offline"],
     queryFn: async () => {
       setSyncStatus("syncing");
-      
-      const { data, error } = await supabase
-        .from("hotspots")
-        .select("*")
-        .order("upvotes", { ascending: false });
+
+      const { data, error } = await supabase.from("hotspots").select("*").order("upvotes", { ascending: false });
 
       if (error) {
         setSyncStatus("error");
@@ -203,7 +204,7 @@ export const useOfflineHotspots = (): UseOfflineHotspotsReturn => {
   // Merge all hotspot sources
   const mergedHotspots = useMemo(() => {
     const presetData = BANDUNG_HOTSPOTS.map(presetToMerged);
-    
+
     // If offline and we have cached data, use cached
     if (!isOnline && cachedHotspots.length > 0) {
       // Deduplicate: cached data includes everything
@@ -217,27 +218,29 @@ export const useOfflineHotspots = (): UseOfflineHotspotsReturn => {
 
     // If online, merge preset + database
     const databaseData = dbHotspots || [];
-    
+
     // Create a map for deduplication (database takes precedence for same IDs)
     const hotspotMap = new Map<string, MergedHotspot>();
-    
+
     // Add presets first
     presetData.forEach((h) => {
       hotspotMap.set(h.id, h);
     });
-    
+
     // Add/override with database data
     databaseData.forEach((h) => {
       // Only add if not a preset ID (avoid duplicates)
-      if (!h.id.startsWith("campus-") && 
-          !h.id.startsWith("mall-") && 
-          !h.id.startsWith("station-") &&
-          !h.id.startsWith("food-") &&
-          !h.id.startsWith("hospital-") &&
-          !h.id.startsWith("school-") &&
-          !h.id.startsWith("tourism-") &&
-          !h.id.startsWith("office-") &&
-          !h.id.startsWith("caution-")) {
+      if (
+        !h.id.startsWith("campus-") &&
+        !h.id.startsWith("mall-") &&
+        !h.id.startsWith("station-") &&
+        !h.id.startsWith("food-") &&
+        !h.id.startsWith("hospital-") &&
+        !h.id.startsWith("school-") &&
+        !h.id.startsWith("tourism-") &&
+        !h.id.startsWith("office-") &&
+        !h.id.startsWith("caution-")
+      ) {
         hotspotMap.set(h.id, h);
       }
     });

@@ -50,28 +50,20 @@ const ConfirmDialog = ({
       <AlertDialogContent className="max-w-[calc(100%-2rem)] sm:max-w-md rounded-2xl">
         <AlertDialogHeader className="text-center sm:text-center">
           {icon && (
-            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-              {icon}
-            </div>
+            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-muted">{icon}</div>
           )}
           <AlertDialogTitle className="text-lg">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-sm text-muted-foreground">
-            {description}
-          </AlertDialogDescription>
+          <AlertDialogDescription className="text-sm text-muted-foreground">{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex-row gap-2 sm:space-x-0">
-          <AlertDialogCancel
-            onClick={handleCancel}
-            className="flex-1 mt-0"
-          >
+          <AlertDialogCancel onClick={handleCancel} className="flex-1 mt-0">
             {cancelLabel}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
             className={cn(
               "flex-1",
-              variant === "destructive" && 
-                "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              variant === "destructive" && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
             )}
           >
             {confirmLabel}

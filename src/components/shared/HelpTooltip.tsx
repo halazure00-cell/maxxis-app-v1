@@ -1,10 +1,5 @@
 import { Info } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 interface HelpTooltipProps {
@@ -14,12 +9,7 @@ interface HelpTooltipProps {
   iconClassName?: string;
 }
 
-const HelpTooltip = ({ 
-  content, 
-  side = "top", 
-  className,
-  iconClassName 
-}: HelpTooltipProps) => {
+const HelpTooltip = ({ content, side = "top", className, iconClassName }: HelpTooltipProps) => {
   return (
     <TooltipProvider delayDuration={100}>
       <Tooltip>
@@ -37,10 +27,7 @@ const HelpTooltip = ({
             <Info className={cn("w-4 h-4", iconClassName)} />
           </button>
         </TooltipTrigger>
-        <TooltipContent 
-          side={side} 
-          className="max-w-[250px] text-xs bg-popover text-popover-foreground"
-        >
+        <TooltipContent side={side} className="max-w-[250px] text-xs bg-popover text-popover-foreground">
           <p>{content}</p>
         </TooltipContent>
       </Tooltip>

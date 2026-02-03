@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { AlertTriangle, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
 const PanicButton = () => {
@@ -21,27 +15,27 @@ const PanicButton = () => {
 
   const activatePanic = async () => {
     setIsActivating(true);
-    
+
     try {
       // Get current location
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-            
+
             // Create WhatsApp message with coordinates
             const message = encodeURIComponent(
               `🆘 DARURAT! Saya butuh bantuan!\n\n📍 Lokasi: https://maps.google.com/?q=${latitude},${longitude}\n\nDikirim dari Maxim Driver Assistant`
             );
-            
+
             // Open WhatsApp with pre-filled message
             window.open(`https://wa.me/?text=${message}`, "_blank");
-            
+
             toast({
               title: "Alert Terkirim",
               description: "WhatsApp dibuka dengan koordinat lokasi Anda",
             });
-            
+
             setIsOpen(false);
           },
           (error) => {
@@ -71,11 +65,7 @@ const PanicButton = () => {
 
   return (
     <>
-      <button
-        onClick={handlePanicPress}
-        className="panic-button"
-        aria-label="Tombol Darurat"
-      >
+      <button onClick={handlePanicPress} className="panic-button" aria-label="Tombol Darurat">
         <AlertTriangle className="w-8 h-8" />
       </button>
 
@@ -86,9 +76,7 @@ const PanicButton = () => {
               <AlertTriangle className="w-5 h-5" />
               Mode Darurat
             </DialogTitle>
-            <DialogDescription>
-              Pilih tindakan darurat yang diperlukan
-            </DialogDescription>
+            <DialogDescription>Pilih tindakan darurat yang diperlukan</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-3">
@@ -102,29 +90,17 @@ const PanicButton = () => {
             </Button>
 
             <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => callEmergency("112")}
-                className="h-12"
-              >
+              <Button variant="outline" onClick={() => callEmergency("112")} className="h-12">
                 <Phone className="w-4 h-4 mr-2" />
                 Polisi (112)
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => callEmergency("118")}
-                className="h-12"
-              >
+              <Button variant="outline" onClick={() => callEmergency("118")} className="h-12">
                 <Phone className="w-4 h-4 mr-2" />
                 Ambulans (118)
               </Button>
             </div>
 
-            <Button
-              variant="ghost"
-              onClick={() => setIsOpen(false)}
-              className="w-full"
-            >
+            <Button variant="ghost" onClick={() => setIsOpen(false)} className="w-full">
               Batal
             </Button>
           </div>

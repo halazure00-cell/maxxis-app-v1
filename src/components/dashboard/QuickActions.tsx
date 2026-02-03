@@ -1,11 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { 
-  ClipboardList, 
-  Calculator, 
-  MapPin, 
-  BookOpen,
-  ChevronRight 
-} from "lucide-react";
+import { ClipboardList, Calculator, MapPin, BookOpen, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ActionItem {
@@ -60,14 +54,10 @@ const QuickActions = () => {
             onClick={() => navigate(action.to)}
             className="flex flex-col items-start gap-2 p-4 bg-card rounded-xl border border-border hover:bg-muted/50 transition-all active:scale-98 text-left"
           >
-            <div className={cn("p-2.5 rounded-xl", action.color)}>
-              {action.icon}
-            </div>
+            <div className={cn("p-2.5 rounded-xl", action.color)}>{action.icon}</div>
             <div>
               <p className="font-semibold text-foreground text-sm">{action.label}</p>
-              <p className="text-xs text-muted-foreground">
-                {action.description}
-              </p>
+              <p className="text-xs text-muted-foreground">{action.description}</p>
             </div>
           </button>
         ))}

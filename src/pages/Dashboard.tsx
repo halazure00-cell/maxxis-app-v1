@@ -74,9 +74,7 @@ const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-muted-foreground">{getGreeting()}</p>
-          <h1 className="text-xl font-bold text-foreground">
-            {profile?.full_name?.split(" ")[0] || "Driver"}
-          </h1>
+          <h1 className="text-xl font-bold text-foreground">{profile?.full_name?.split(" ")[0] || "Driver"}</h1>
         </div>
         <p className="text-xs text-muted-foreground text-right">
           {new Date().toLocaleDateString("id-ID", {
@@ -91,7 +89,11 @@ const Dashboard = () => {
       <ProfileCard
         name={profile?.full_name || "Driver"}
         avatarUrl={profile?.avatar_url || undefined}
-        joinDate={profile?.join_date ? new Date(profile.join_date).toLocaleDateString("id-ID", { month: "long", year: "numeric" }) : undefined}
+        joinDate={
+          profile?.join_date
+            ? new Date(profile.join_date).toLocaleDateString("id-ID", { month: "long", year: "numeric" })
+            : undefined
+        }
         attributeStatus={profile?.attribute_status || "active"}
         attributeExpiry={profile?.attribute_expiry_date || undefined}
       />
@@ -99,18 +101,13 @@ const Dashboard = () => {
       {/* Stats Grid - 2x2 */}
       <div className="grid grid-cols-2 gap-3">
         {/* Health Score */}
-        <Card 
-          className="cursor-pointer active:scale-[0.98] transition-transform"
-          onClick={() => navigate("/finance")}
-        >
+        <Card className="cursor-pointer active:scale-[0.98] transition-transform" onClick={() => navigate("/finance")}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className={cn("w-4 h-4", getHealthColor(healthScore))} />
               <span className="text-xs text-muted-foreground">Kesehatan</span>
             </div>
-            <p className={cn("text-2xl font-bold", getHealthColor(healthScore))}>
-              {healthScore}%
-            </p>
+            <p className={cn("text-2xl font-bold", getHealthColor(healthScore))}>{healthScore}%</p>
             <div className="h-1.5 bg-muted rounded-full overflow-hidden mt-2">
               <div
                 className={cn("h-full transition-all", getHealthBg(healthScore))}
@@ -127,9 +124,7 @@ const Dashboard = () => {
               <Star className="w-4 h-4 text-primary" />
               <span className="text-xs text-muted-foreground">Rating</span>
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {profile?.current_rating?.toFixed(2) || "0.00"}
-            </p>
+            <p className="text-2xl font-bold text-foreground">{profile?.current_rating?.toFixed(2) || "0.00"}</p>
             <p className="text-xs text-muted-foreground mt-1">
               {profile?.current_rating && profile.current_rating >= 0.95 ? "Sangat Baik ⭐" : "Perlu Ditingkatkan"}
             </p>
@@ -137,18 +132,13 @@ const Dashboard = () => {
         </Card>
 
         {/* Earnings Today */}
-        <Card 
-          className="cursor-pointer active:scale-[0.98] transition-transform"
-          onClick={() => navigate("/finance")}
-        >
+        <Card className="cursor-pointer active:scale-[0.98] transition-transform" onClick={() => navigate("/finance")}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <Wallet className="w-4 h-4 text-success" />
               <span className="text-xs text-muted-foreground">Hari Ini</span>
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {formatCurrency(profile?.earnings_today || 0)}
-            </p>
+            <p className="text-2xl font-bold text-foreground">{formatCurrency(profile?.earnings_today || 0)}</p>
             <p className="text-xs text-muted-foreground mt-1">
               Komisi {profile?.attribute_status === "active" ? "5%" : "15%"}
             </p>
@@ -156,21 +146,14 @@ const Dashboard = () => {
         </Card>
 
         {/* Orders Today */}
-        <Card 
-          className="cursor-pointer active:scale-[0.98] transition-transform"
-          onClick={() => navigate("/finance")}
-        >
+        <Card className="cursor-pointer active:scale-[0.98] transition-transform" onClick={() => navigate("/finance")}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <Package className="w-4 h-4 text-accent-foreground" />
               <span className="text-xs text-muted-foreground">Order</span>
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {profile?.total_orders_today || 0}
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              order hari ini
-            </p>
+            <p className="text-2xl font-bold text-foreground">{profile?.total_orders_today || 0}</p>
+            <p className="text-xs text-muted-foreground mt-1">order hari ini</p>
           </CardContent>
         </Card>
       </div>
@@ -183,9 +166,7 @@ const Dashboard = () => {
         <CardContent className="p-4 flex items-center justify-between">
           <div>
             <p className="font-semibold text-foreground">Tips Bintang 5 ⭐</p>
-            <p className="text-sm text-muted-foreground">
-              Tingkatkan rating & pendapatan
-            </p>
+            <p className="text-sm text-muted-foreground">Tingkatkan rating & pendapatan</p>
           </div>
           <span className="text-primary font-medium text-sm">Lihat →</span>
         </CardContent>

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 const ONBOARDING_KEY = "onboarding-completed";
 const ONBOARDING_STEPS = ["dashboard", "hotspot", "finance", "safety"] as const;
 
-export type OnboardingStep = typeof ONBOARDING_STEPS[number];
+export type OnboardingStep = (typeof ONBOARDING_STEPS)[number];
 
 interface UseOnboardingReturn {
   isOnboardingComplete: boolean;
@@ -33,7 +33,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
 
   const nextStep = useCallback(() => {
     if (currentStep < ONBOARDING_STEPS.length - 1) {
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
     } else {
       completeOnboarding();
     }
@@ -41,7 +41,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep((prev) => prev - 1);
     }
   }, [currentStep]);
 

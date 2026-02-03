@@ -12,17 +12,7 @@ import EnhancedPanicButton from "@/components/safety/EnhancedPanicButton";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
 import { useToast } from "@/hooks/use-toast";
 import { validatePhone, validateName, formatPhoneDisplay } from "@/lib/validation";
-import { 
-  Phone, 
-  Plus, 
-  Trash2, 
-  Heart, 
-  Ambulance,
-  User,
-  X,
-  AlertCircle,
-  UserMinus
-} from "lucide-react";
+import { Phone, Plus, Trash2, Heart, Ambulance, User, X, AlertCircle, UserMinus } from "lucide-react";
 
 interface EmergencyContact {
   id: string;
@@ -43,7 +33,7 @@ const Safety = () => {
   const [formRelation, setFormRelation] = useState("");
   const [nameError, setNameError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  
+
   // Delete confirmation state
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [contactToDelete, setContactToDelete] = useState<EmergencyContact | null>(null);
@@ -58,7 +48,7 @@ const Safety = () => {
     queryKey: ["emergencyContacts", user?.id],
     queryFn: async (): Promise<EmergencyContact[]> => {
       if (!user?.id) return [];
-      
+
       const { data, error } = await supabase
         .from("emergency_contacts")
         .select("*")
@@ -115,10 +105,7 @@ const Safety = () => {
 
   const deleteContact = useMutation({
     mutationFn: async (contactId: string) => {
-      const { error } = await supabase
-        .from("emergency_contacts")
-        .delete()
-        .eq("id", contactId);
+      const { error } = await supabase.from("emergency_contacts").delete().eq("id", contactId);
 
       if (error) throw error;
     },
@@ -178,13 +165,13 @@ const Safety = () => {
   };
   const handlePanicActivate = async () => {
     if (!user?.id) return;
-    
+
     // Get current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          
+
           // Save panic alert to database
           await supabase.from("panic_alerts").insert({
             user_id: user.id,
@@ -201,16 +188,16 @@ const Safety = () => {
             }, idx * 1000);
           });
 
-          toast({ 
-            title: "🚨 Darurat Aktif!", 
-            description: "Lokasi disimpan & kontak dihubungi" 
+          toast({
+            title: "🚨 Darurat Aktif!",
+            description: "Lokasi disimpan & kontak dihubungi",
           });
         },
         () => {
           // Fallback without location
-          toast({ 
-            title: "🚨 Darurat Aktif!", 
-            description: "Menghubungi kontak darurat..." 
+          toast({
+            title: "🚨 Darurat Aktif!",
+            description: "Menghubungi kontak darurat...",
           });
         }
       );
@@ -259,7 +246,7 @@ const Safety = () => {
   // Auto-format phone number
   const handlePhoneChange = (value: string) => {
     let formatted = value.replace(/\D/g, "");
-    
+
     // Auto-add +62 for Indonesian numbers
     if (formatted.startsWith("0")) {
       formatted = "62" + formatted.slice(1);
@@ -267,7 +254,7 @@ const Safety = () => {
     if (formatted.length > 0 && !formatted.startsWith("62")) {
       formatted = "62" + formatted;
     }
-    
+
     // Format: +62 xxx-xxxx-xxxx
     if (formatted.length > 2) {
       let display = "+62 ";
@@ -295,7 +282,7 @@ const Safety = () => {
 
       {/* Quick Call Buttons */}
       <div className="grid grid-cols-2 gap-3">
-        <Button 
+        <Button
           variant="outline"
           className="h-14 text-base font-semibold border-2 border-destructive/30 hover:bg-destructive hover:text-destructive-foreground"
           onClick={() => callContact("112")}
@@ -303,7 +290,7 @@ const Safety = () => {
           <Phone className="w-5 h-5 mr-2" />
           Polisi 112
         </Button>
-        <Button 
+        <Button
           variant="outline"
           className="h-14 text-base font-semibold border-2 border-destructive/30 hover:bg-destructive hover:text-destructive-foreground"
           onClick={() => callContact("118")}
@@ -324,10 +311,7 @@ const Safety = () => {
         <CardContent className="space-y-3">
           {contacts && contacts.length > 0 ? (
             contacts.map((contact) => (
-              <div
-                key={contact.id}
-                className="flex items-center gap-3 p-3 bg-muted rounded-xl"
-              >
+              <div key={contact.id} className="flex items-center gap-3 p-3 bg-muted rounded-xl">
                 <Button
                   size="icon"
                   className="h-12 w-12 rounded-full bg-success hover:bg-success/90"
@@ -337,9 +321,7 @@ const Safety = () => {
                 </Button>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground truncate">{contact.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {contact.relationship || contact.phone}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{contact.relationship || contact.phone}</p>
                 </div>
                 <Button
                   size="icon"
@@ -352,9 +334,7 @@ const Safety = () => {
               </div>
             ))
           ) : (
-            <p className="text-sm text-muted-foreground text-center py-4">
-              Belum ada kontak darurat
-            </p>
+            <p className="text-sm text-muted-foreground text-center py-4">Belum ada kontak darurat</p>
           )}
 
           {/* Add Contact Form */}
@@ -366,7 +346,7 @@ const Safety = () => {
                   <X className="w-4 h-4" />
                 </Button>
               </div>
-              
+
               <div className="space-y-1">
                 <Input
                   placeholder="Nama"
@@ -381,7 +361,7 @@ const Safety = () => {
                   </div>
                 )}
               </div>
-              
+
               <div className="space-y-1">
                 <Input
                   type="tel"
@@ -397,7 +377,7 @@ const Safety = () => {
                   </div>
                 )}
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
                 {relationOptions.map((rel) => (
                   <Button
@@ -411,7 +391,7 @@ const Safety = () => {
                   </Button>
                 ))}
               </div>
-              
+
               <Button
                 onClick={() => addContact.mutate()}
                 disabled={!isFormValid() || addContact.isPending}
@@ -422,11 +402,7 @@ const Safety = () => {
             </div>
           ) : (
             (contacts?.length || 0) < 3 && (
-              <Button 
-                variant="outline" 
-                className="w-full h-12"
-                onClick={() => setShowForm(true)}
-              >
+              <Button variant="outline" className="w-full h-12" onClick={() => setShowForm(true)}>
                 <Plus className="w-4 h-4 mr-2" />
                 Tambah Kontak Darurat
               </Button>
@@ -446,9 +422,7 @@ const Safety = () => {
         <CardContent>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="seizure" className="border-b-0">
-              <AccordionTrigger className="text-sm font-medium py-3">
-                🫨 Kejang Epilepsi
-              </AccordionTrigger>
+              <AccordionTrigger className="text-sm font-medium py-3">🫨 Kejang Epilepsi</AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground space-y-1.5 pb-4">
                 <p>• Hentikan kendaraan di tempat aman</p>
                 <p>• Jangan masukkan apapun ke mulut</p>
@@ -458,9 +432,7 @@ const Safety = () => {
             </AccordionItem>
 
             <AccordionItem value="heartattack" className="border-b-0">
-              <AccordionTrigger className="text-sm font-medium py-3">
-                💔 Serangan Jantung
-              </AccordionTrigger>
+              <AccordionTrigger className="text-sm font-medium py-3">💔 Serangan Jantung</AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground space-y-1.5 pb-4">
                 <p>• Hentikan, nyalakan hazard</p>
                 <p>• Hubungi 118 segera</p>
@@ -470,9 +442,7 @@ const Safety = () => {
             </AccordionItem>
 
             <AccordionItem value="accident" className="border-b-0">
-              <AccordionTrigger className="text-sm font-medium py-3">
-                🚗 Kecelakaan
-              </AccordionTrigger>
+              <AccordionTrigger className="text-sm font-medium py-3">🚗 Kecelakaan</AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground space-y-1.5 pb-4">
                 <p>• Amankan lokasi, nyalakan hazard</p>
                 <p>• Periksa kondisi diri dulu</p>
@@ -490,9 +460,10 @@ const Safety = () => {
         open={deleteConfirmOpen}
         onOpenChange={setDeleteConfirmOpen}
         title="Hapus Kontak Darurat?"
-        description={contactToDelete 
-          ? `"${contactToDelete.name}${contactToDelete.relationship ? ` (${contactToDelete.relationship})` : ''}" akan dihapus dari daftar kontak darurat Anda.`
-          : "Kontak ini akan dihapus."
+        description={
+          contactToDelete
+            ? `"${contactToDelete.name}${contactToDelete.relationship ? ` (${contactToDelete.relationship})` : ""}" akan dihapus dari daftar kontak darurat Anda.`
+            : "Kontak ini akan dihapus."
         }
         confirmLabel="Ya, Hapus"
         cancelLabel="Batal"

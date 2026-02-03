@@ -11,16 +11,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import OrderInputForm from "@/components/finance/OrderInputForm";
 import ExpenseInputForm from "@/components/finance/ExpenseInputForm";
 import DailyStats from "@/components/finance/DailyStats";
-import { 
-  Wallet, 
-  TrendingUp, 
-  TrendingDown,
-  Plus,
-  Minus,
-  BarChart3,
-  Package,
-  Clock
-} from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, Plus, Minus, BarChart3, Package, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Order {
@@ -94,13 +85,9 @@ const Finance = () => {
   // Calculate today's stats
   const todayStats = useMemo(() => {
     const today = new Date().toDateString();
-    
-    const todayOrders = orders?.filter(
-      (o) => new Date(o.created_at).toDateString() === today
-    ) || [];
-    const todayExpenses = expenses?.filter(
-      (e) => new Date(e.created_at).toDateString() === today
-    ) || [];
+
+    const todayOrders = orders?.filter((o) => new Date(o.created_at).toDateString() === today) || [];
+    const todayExpenses = expenses?.filter((e) => new Date(e.created_at).toDateString() === today) || [];
 
     const totalNet = todayOrders.reduce((sum, o) => sum + (o.net_amount || 0), 0);
     const totalExpenses = todayExpenses.reduce((sum, e) => sum + e.amount, 0);
@@ -148,31 +135,16 @@ const Finance = () => {
   // Render different views
   if (viewMode === "order") {
     return (
-      <OrderInputForm 
-        userId={user?.id || ""} 
-        commissionRate={commissionRate}
-        onClose={() => setViewMode("main")} 
-      />
+      <OrderInputForm userId={user?.id || ""} commissionRate={commissionRate} onClose={() => setViewMode("main")} />
     );
   }
 
   if (viewMode === "expense") {
-    return (
-      <ExpenseInputForm 
-        userId={user?.id || ""} 
-        onClose={() => setViewMode("main")} 
-      />
-    );
+    return <ExpenseInputForm userId={user?.id || ""} onClose={() => setViewMode("main")} />;
   }
 
   if (viewMode === "stats") {
-    return (
-      <DailyStats 
-        orders={orders || []} 
-        expenses={expenses || []} 
-        onClose={() => setViewMode("main")} 
-      />
-    );
+    return <DailyStats orders={orders || []} expenses={expenses || []} onClose={() => setViewMode("main")} />;
   }
 
   // Main View
@@ -182,21 +154,18 @@ const Finance = () => {
       <PageHeader title="Keuangan" showBack={false} />
 
       {/* Today's Take Home - Main Highlight */}
-      <Card className={cn(
-        "border-2",
-        todayStats.takeHome >= 0 ? "border-success bg-success/5" : "border-destructive bg-destructive/5"
-      )}>
+      <Card
+        className={cn(
+          "border-2",
+          todayStats.takeHome >= 0 ? "border-success bg-success/5" : "border-destructive bg-destructive/5"
+        )}
+      >
         <CardContent className="p-5 text-center">
           <p className="text-sm text-muted-foreground mb-1">💰 Bisa Dibawa Pulang</p>
-          <p className={cn(
-            "text-3xl font-bold",
-            todayStats.takeHome >= 0 ? "text-success" : "text-destructive"
-          )}>
+          <p className={cn("text-3xl font-bold", todayStats.takeHome >= 0 ? "text-success" : "text-destructive")}>
             Rp {formatCurrency(todayStats.takeHome)}
           </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Hari ini • {todayStats.orderCount} order
-          </p>
+          <p className="text-xs text-muted-foreground mt-2">Hari ini • {todayStats.orderCount} order</p>
         </CardContent>
       </Card>
 
@@ -208,9 +177,7 @@ const Finance = () => {
               <TrendingUp className="w-4 h-4 text-success" />
               <span className="text-xs text-muted-foreground">Pendapatan</span>
             </div>
-            <p className="text-xl font-bold text-foreground">
-              Rp {formatShortCurrency(todayStats.totalNet)}
-            </p>
+            <p className="text-xl font-bold text-foreground">Rp {formatShortCurrency(todayStats.totalNet)}</p>
           </CardContent>
         </Card>
 
@@ -220,19 +187,14 @@ const Finance = () => {
               <TrendingDown className="w-4 h-4 text-destructive" />
               <span className="text-xs text-muted-foreground">Pengeluaran</span>
             </div>
-            <p className="text-xl font-bold text-foreground">
-              Rp {formatShortCurrency(todayStats.totalExpenses)}
-            </p>
+            <p className="text-xl font-bold text-foreground">Rp {formatShortCurrency(todayStats.totalExpenses)}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Action Buttons */}
       <div className="grid grid-cols-2 gap-3">
-        <Button
-          onClick={() => setViewMode("order")}
-          className="h-14 text-base font-semibold"
-        >
+        <Button onClick={() => setViewMode("order")} className="h-14 text-base font-semibold">
           <Plus className="w-5 h-5 mr-2" />
           Input Order
         </Button>
@@ -256,29 +218,16 @@ const Finance = () => {
                 <Package className="w-4 h-4 text-primary" />
                 Order Hari Ini
               </p>
-              <span className="text-xs text-muted-foreground">
-                {todayStats.orderCount} total
-              </span>
+              <span className="text-xs text-muted-foreground">{todayStats.orderCount} total</span>
             </div>
             <div className="space-y-2">
               {todayStats.recentOrders.map((order) => (
-                <div 
-                  key={order.id} 
-                  className="flex items-center justify-between p-2 rounded-lg bg-muted/30"
-                >
+                <div key={order.id} className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
                   <div className="flex items-center gap-2">
                     <Clock className="w-3 h-3 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">
-                      {formatTime(order.created_at)}
-                    </span>
-                    <span className="text-xs font-medium capitalize">
-                      {order.order_type}
-                    </span>
-                    {order.pickup_name && (
-                      <span className="text-xs text-muted-foreground">
-                        • {order.pickup_name}
-                      </span>
-                    )}
+                    <span className="text-xs text-muted-foreground">{formatTime(order.created_at)}</span>
+                    <span className="text-xs font-medium capitalize">{order.order_type}</span>
+                    {order.pickup_name && <span className="text-xs text-muted-foreground">• {order.pickup_name}</span>}
                   </div>
                   <span className="text-sm font-bold text-success">
                     +Rp {formatShortCurrency(order.net_amount || 0)}
@@ -302,22 +251,13 @@ const Finance = () => {
             </div>
             <div className="space-y-2">
               {todayStats.recentExpenses.map((expense) => (
-                <div 
-                  key={expense.id} 
-                  className="flex items-center justify-between p-2 rounded-lg bg-background/50"
-                >
+                <div key={expense.id} className="flex items-center justify-between p-2 rounded-lg bg-background/50">
                   <div className="flex items-center gap-2">
                     <Clock className="w-3 h-3 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">
-                      {formatTime(expense.created_at)}
-                    </span>
-                    <span className="text-xs font-medium capitalize">
-                      {expense.expense_type}
-                    </span>
+                    <span className="text-xs text-muted-foreground">{formatTime(expense.created_at)}</span>
+                    <span className="text-xs font-medium capitalize">{expense.expense_type}</span>
                   </div>
-                  <span className="text-sm font-bold text-destructive">
-                    -Rp {formatShortCurrency(expense.amount)}
-                  </span>
+                  <span className="text-sm font-bold text-destructive">-Rp {formatShortCurrency(expense.amount)}</span>
                 </div>
               ))}
             </div>
@@ -338,9 +278,7 @@ const Finance = () => {
       {/* Tip */}
       <Card className="bg-primary/10 border-primary/30">
         <CardContent className="p-4">
-          <p className="text-sm text-foreground">
-            💡 Input setiap order untuk tracking pendapatan bersih yang akurat!
-          </p>
+          <p className="text-sm text-foreground">💡 Input setiap order untuk tracking pendapatan bersih yang akurat!</p>
         </CardContent>
       </Card>
     </div>

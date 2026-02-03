@@ -10,13 +10,7 @@ interface ProfileCardProps {
   attributeExpiry?: string;
 }
 
-const ProfileCard = ({
-  name,
-  avatarUrl,
-  joinDate,
-  attributeStatus,
-  attributeExpiry,
-}: ProfileCardProps) => {
+const ProfileCard = ({ name, avatarUrl, joinDate, attributeStatus, attributeExpiry }: ProfileCardProps) => {
   const getStatusConfig = (status: string) => {
     switch (status) {
       case "active":
@@ -61,13 +55,13 @@ const ProfileCard = ({
 
         <div className="flex-1 min-w-0">
           <h2 className="text-xl font-bold truncate">{name || "Driver Maxim"}</h2>
-          {joinDate && (
-            <p className="text-sm opacity-80 mb-2">Sejak {joinDate}</p>
-          )}
-          <div className={cn(
-            "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium",
-            status.className
-          )}>
+          {joinDate && <p className="text-sm opacity-80 mb-2">Sejak {joinDate}</p>}
+          <div
+            className={cn(
+              "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium",
+              status.className
+            )}
+          >
             <StatusIcon className="w-3.5 h-3.5" />
             {status.label}
           </div>

@@ -11,13 +11,7 @@ interface PageHeaderProps {
   className?: string;
 }
 
-const PageHeader = ({
-  title,
-  showBack = true,
-  onBack,
-  rightAction,
-  className,
-}: PageHeaderProps) => {
+const PageHeader = ({ title, showBack = true, onBack, rightAction, className }: PageHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBack = () => {

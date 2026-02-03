@@ -35,7 +35,7 @@
     /* Status Colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
-    
+
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 5%;
 
@@ -91,7 +91,7 @@
 
     --success: 142 76% 40%;
     --success-foreground: 0 0% 98%;
-    
+
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 5%;
 
@@ -126,11 +126,20 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
   }
 
   /* Large touch targets for mobile/riding */
-  button, a, input, select {
+  button,
+  a,
+  input,
+  select {
     min-height: 44px;
   }
 }
@@ -157,11 +166,25 @@
 
   /* Shake animation for invalid input */
   @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-    20%, 40%, 60%, 80% { transform: translateX(4px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-4px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(4px);
+    }
   }
-  
+
   .animate-shake {
     animation: shake 0.5s ease-in-out;
   }

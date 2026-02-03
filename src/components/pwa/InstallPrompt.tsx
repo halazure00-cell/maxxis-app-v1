@@ -1,12 +1,6 @@
 import { Download, Smartphone, Share, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { usePWA } from "@/hooks/usePWA";
 
 interface InstallPromptProps {
@@ -52,9 +46,7 @@ export function InstallPrompt({ open, onOpenChange }: InstallPromptProps) {
               </div>
               <div>
                 <p className="font-medium text-sm">Akses Cepat</p>
-                <p className="text-xs text-muted-foreground">
-                  Buka langsung dari home screen tanpa browser
-                </p>
+                <p className="text-xs text-muted-foreground">Buka langsung dari home screen tanpa browser</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -63,9 +55,7 @@ export function InstallPrompt({ open, onOpenChange }: InstallPromptProps) {
               </div>
               <div>
                 <p className="font-medium text-sm">Mode Offline</p>
-                <p className="text-xs text-muted-foreground">
-                  Tetap bisa digunakan meski tanpa koneksi internet
-                </p>
+                <p className="text-xs text-muted-foreground">Tetap bisa digunakan meski tanpa koneksi internet</p>
               </div>
             </div>
           </div>

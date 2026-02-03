@@ -1,17 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import L from "leaflet";
-import { 
-  X, 
-  Navigation, 
-  Loader2, 
-  Cloud, 
-  CloudRain, 
-  Sun, 
-  Thermometer,
-  MapPin,
-  Calendar,
-  Clock
-} from "lucide-react";
+import { X, Navigation, Loader2, Cloud, CloudRain, Sun, Thermometer, MapPin, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -160,9 +149,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
         iconAnchor: [10, 10],
       });
 
-      L.marker(userLocation, { icon: userIcon })
-        .bindPopup("📍 Lokasi Anda")
-        .addTo(mapInstance);
+      L.marker(userLocation, { icon: userIcon }).bindPopup("📍 Lokasi Anda").addTo(mapInstance);
     }
 
     // Add hotspot markers with smart scoring visual
@@ -183,8 +170,8 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
           display: flex; 
           align-items: center; 
           justify-content: center; 
-          border: ${borderWidth} solid ${isTopRecommendation ? '#FFD600' : 'white'}; 
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3)${isTopRecommendation ? ', 0 0 12px rgba(255,214,0,0.5)' : ''}; 
+          border: ${borderWidth} solid ${isTopRecommendation ? "#FFD600" : "white"}; 
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3)${isTopRecommendation ? ", 0 0 12px rgba(255,214,0,0.5)" : ""}; 
           font-size: ${fontSize}px;
         ">${emoji}</div>`,
         className: "custom-marker",
@@ -193,13 +180,17 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
       });
 
       // Build popup content with relevance reasons
-      const reasonsHtml = spot.relevanceReason.length > 0 
-        ? `<div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
-            ${spot.relevanceReason.map(r => 
-              `<span style="display: inline-block; background: #f0f0f0; font-size: 10px; padding: 2px 6px; border-radius: 4px;">${r}</span>`
-            ).join('')}
+      const reasonsHtml =
+        spot.relevanceReason.length > 0
+          ? `<div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+            ${spot.relevanceReason
+              .map(
+                (r) =>
+                  `<span style="display: inline-block; background: #f0f0f0; font-size: 10px; padding: 2px 6px; border-radius: 4px;">${r}</span>`
+              )
+              .join("")}
            </div>`
-        : '';
+          : "";
 
       const popupContent = `
         <div style="min-width: 200px;">
@@ -207,10 +198,10 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
             <span style="font-size: 18px;">${emoji}</span>
             <strong style="font-size: 14px;">${spot.name}</strong>
           </div>
-          ${spot.isPeakNow ? '<span style="display: inline-block; background: #22c55e; color: white; font-size: 11px; padding: 2px 8px; border-radius: 9999px; margin-bottom: 4px;">🔥 RAMAI SEKARANG</span>' : ''}
+          ${spot.isPeakNow ? '<span style="display: inline-block; background: #22c55e; color: white; font-size: 11px; padding: 2px 8px; border-radius: 9999px; margin-bottom: 4px;">🔥 RAMAI SEKARANG</span>' : ""}
           <p style="font-size: 12px; color: #666; margin-bottom: 4px;">${spot.description || spot.category}</p>
           <p style="font-size: 12px; color: #888;">📏 ${spot.distance.toFixed(1)} km • ⭐ Skor: ${spot.score}</p>
-          ${!spot.is_safe_zone ? '<p style="font-size: 12px; color: #f97316; margin-top: 4px;">⚠️ Zona waspada</p>' : ''}
+          ${!spot.is_safe_zone ? '<p style="font-size: 12px; color: #f97316; margin-top: 4px;">⚠️ Zona waspada</p>' : ""}
           ${reasonsHtml}
         </div>
       `;
@@ -255,12 +246,15 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
   };
 
   // Fly to spot
-  const handleSpotClick = useCallback((spot: Hotspot) => {
-    setSelectedSpot(spot);
-    if (mapInstance) {
-      mapInstance.flyTo([spot.latitude, spot.longitude], 16, { duration: 1 });
-    }
-  }, [mapInstance]);
+  const handleSpotClick = useCallback(
+    (spot: Hotspot) => {
+      setSelectedSpot(spot);
+      if (mapInstance) {
+        mapInstance.flyTo([spot.latitude, spot.longitude], 16, { duration: 1 });
+      }
+    },
+    [mapInstance]
+  );
 
   const getWeatherIcon = () => {
     if (!weather) return <Cloud className="w-5 h-5" />;
@@ -299,7 +293,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
                       {weather.temperature}°C
                     </p>
                   </div>
-                  <Badge 
+                  <Badge
                     variant={weather.isGoodForDriving ? "default" : "destructive"}
                     className="text-[10px] px-1.5 py-0.5"
                   >
@@ -310,7 +304,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
                 <span className="text-xs text-muted-foreground">Cuaca N/A</span>
               )}
             </div>
-            
+
             {/* Context Row */}
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
               <span className="flex items-center gap-1">
@@ -352,7 +346,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
                 {summary.totalSpots} spot
               </Badge>
             </div>
-            
+
             {/* Context info */}
             <p className="text-[10px] text-muted-foreground mb-2">
               Berdasarkan lokasi, waktu ({summary.timeContext}), {summary.dayType.toLowerCase()}, dan cuaca
@@ -363,7 +357,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
                 {scoredHotspots.slice(0, 5).map((spot, index) => {
                   const emoji = categoryEmojis[spot.category] || "📍";
                   const isTop = index === 0;
-                  
+
                   return (
                     <button
                       key={spot.id}
@@ -379,17 +373,13 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
                       <div className="flex items-center gap-2">
                         <span className={isTop ? "text-lg" : ""}>{emoji}</span>
                         <div>
-                          <p className="text-xs font-medium text-foreground truncate max-w-[100px]">
-                            {spot.name}
-                          </p>
+                          <p className="text-xs font-medium text-foreground truncate max-w-[100px]">{spot.name}</p>
                           <p className="text-[10px] text-muted-foreground flex items-center gap-1">
                             📏 {spot.distance.toFixed(1)}km
                             {spot.isPeakNow && <span className="text-green-500">• 🔥</span>}
                           </p>
                           {isTop && spot.relevanceReason.length > 0 && (
-                            <p className="text-[9px] text-primary truncate max-w-[100px]">
-                              {spot.relevanceReason[0]}
-                            </p>
+                            <p className="text-[9px] text-primary truncate max-w-[100px]">{spot.relevanceReason[0]}</p>
                           )}
                         </div>
                       </div>
@@ -399,9 +389,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
               </div>
             ) : (
               <p className="text-xs text-muted-foreground text-center py-2">
-                {userLocation 
-                  ? "Tidak ada spot dalam radius 5km" 
-                  : "Aktifkan lokasi untuk rekomendasi akurat"}
+                {userLocation ? "Tidak ada spot dalam radius 5km" : "Aktifkan lokasi untuk rekomendasi akurat"}
               </p>
             )}
           </CardContent>

@@ -1,11 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { 
-  Home, 
-  MapPin, 
-  Wallet,
-  Shield,
-  User
-} from "lucide-react";
+import { Home, MapPin, Wallet, Shield, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItemProps {
@@ -20,29 +14,15 @@ const NavItem = ({ to, icon, label }: NavItemProps) => (
     className={({ isActive }) =>
       cn(
         "relative flex flex-col items-center justify-center gap-0.5 flex-1 max-w-20 py-2 transition-all",
-        isActive 
-          ? "text-primary" 
-          : "text-muted-foreground hover:text-foreground"
+        isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
       )
     }
   >
     {({ isActive }) => (
       <>
-        {isActive && (
-          <span className="absolute inset-x-2 inset-y-1 bg-primary/15 rounded-xl -z-10" />
-        )}
-        <span className={cn(
-          "transition-transform",
-          isActive && "scale-110"
-        )}>
-          {icon}
-        </span>
-        <span className={cn(
-          "text-[10px] font-medium truncate",
-          isActive && "font-semibold"
-        )}>
-          {label}
-        </span>
+        {isActive && <span className="absolute inset-x-2 inset-y-1 bg-primary/15 rounded-xl -z-10" />}
+        <span className={cn("transition-transform", isActive && "scale-110")}>{icon}</span>
+        <span className={cn("text-[10px] font-medium truncate", isActive && "font-semibold")}>{label}</span>
       </>
     )}
   </NavLink>
