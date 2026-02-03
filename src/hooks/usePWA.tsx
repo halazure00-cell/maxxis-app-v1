@@ -9,6 +9,10 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+interface NavigatorWithStandalone extends Navigator {
+  standalone?: boolean;
+}
+
 interface PWAState {
   isInstallable: boolean;
   isInstalled: boolean;
@@ -36,9 +40,9 @@ export function usePWA() {
     const isAndroid = /android/.test(userAgent);
     
     // Check if running as standalone PWA
-    const isStandalone = 
+    const isStandalone =
       window.matchMedia("(display-mode: standalone)").matches ||
-      (window.navigator as any).standalone === true;
+      (window.navigator as NavigatorWithStandalone).standalone === true;
 
     // Check if already installed (heuristic)
     const isInstalled = isStandalone;

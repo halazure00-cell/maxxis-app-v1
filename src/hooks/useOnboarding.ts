@@ -37,7 +37,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
     } else {
       completeOnboarding();
     }
-  }, [currentStep]);
+  }, [completeOnboarding, currentStep]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
@@ -47,7 +47,7 @@ export const useOnboarding = (): UseOnboardingReturn => {
 
   const skipOnboarding = useCallback(() => {
     completeOnboarding();
-  }, []);
+  }, [completeOnboarding]);
 
   const completeOnboarding = useCallback(() => {
     localStorage.setItem(ONBOARDING_KEY, "true");

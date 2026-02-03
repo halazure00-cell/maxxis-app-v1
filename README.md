@@ -62,7 +62,22 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Vercel (Recommended)
+
+1. Import this repository in Vercel.
+2. Set build settings:
+	- Build Command: `npm run build`
+	- Output Directory: `dist`
+	- Install Command: `npm install`
+3. Add environment variables (Project Settings → Environment Variables):
+	- `VITE_SUPABASE_PROJECT_ID`
+	- `VITE_SUPABASE_PUBLISHABLE_KEY`
+	- `VITE_SUPABASE_URL`
+4. Deploy.
+
+### Lovable
+
+Open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click Share → Publish.
 
 ## Can I connect a custom domain to my Lovable project?
 

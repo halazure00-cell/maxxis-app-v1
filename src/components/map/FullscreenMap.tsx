@@ -129,7 +129,7 @@ const FullscreenMap = ({ onClose, hotspots }: FullscreenMapProps) => {
     return () => {
       map.remove();
     };
-  }, []);
+  }, [mapCenter, mapInstance]);
 
   // Update markers when data changes
   useEffect(() => {
